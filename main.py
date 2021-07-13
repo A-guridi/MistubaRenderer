@@ -1,13 +1,15 @@
-
 import os
 import numpy as np
 import mitsuba
+import matplotlib
+import matplotlib.pyplot as plt
 
 # Set the desired mitsuba variant
 mitsuba.set_variant('scalar_spectral_polarized')
 
 from mitsuba.core import Bitmap, Struct, Thread
 from mitsuba.core.xml import load_file
+
 
 def render_scene():
     # Absolute or relative path to the XML file
@@ -26,12 +28,18 @@ def render_scene():
     film = scene.sensors()[0].film()
 
     # Write out rendering as high dynamic range OpenEXR file
-    film.set_destination_file('/path/to/output.exr')
+    out_path = '/path/to/test_image'
+
+    film.set_destination_file(out_path + ".exr")
     film.develop()
 
     # Write out a tonemapped JPG of the same rendering
+
     bmp = film.bitmap(raw=True)
-    bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.UInt8, srgb_gamma=True).write('/path/to/output.jpg')
+    bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.UInt8, srgb_gamma=True).write(out_path + ".jpg")
+
+    # plot out the rendered image
+    plt.show(out_path + ".jpg")
 
     # Get linear pixel values as a numpy array for further processing
     bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
@@ -41,4 +49,3 @@ def render_scene():
 
 if __name__ == '__main__':
     render_scene()
-
