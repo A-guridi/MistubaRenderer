@@ -4,7 +4,7 @@ import enoki as ek
 import mitsuba
 
 # Set the desired mitsuba variant
-mitsuba.set_variant('scala_spectral_polarized')
+mitsuba.set_variant('scalar_rgb')
 
 from mitsuba.core import Thread, math, Properties, Frame3f, Float, Vector3f, warp
 from mitsuba.core.xml import load_file, load_string
@@ -65,15 +65,15 @@ class MyDiffuseBSDF(BSDF):
 
 
 # Register our BSDF such that the XML file loader can instantiate it when loading a scene
-register_bsdf("mydiffusebsdf", lambda props: MyDiffuseBSDF(props))
+# register_bsdf("mydiffusebsdf", lambda props: MyDiffuseBSDF(props))
 
 # Load an XML file which specifies "mydiffusebsdf" as material
-filename = 'path/to/my/scene.xml'
-Thread.thread().file_resolver().append(os.path.dirname(filename))
-scene = load_file(filename)
-
-scene.integrator().render(scene, scene.sensors()[0])
-
-film = scene.sensors()[0].film()
-film.set_destination_file('my-diffuse-bsdf.exr')
-film.develop()
+# filename = 'path/to/my/scene.xml'
+# Thread.thread().file_resolver().append(os.path.dirname(filename))
+# scene = load_file(filename)
+#
+# scene.integrator().render(scene, scene.sensors()[0])
+#
+# film = scene.sensors()[0].film()
+# film.set_destination_file('my-diffuse-bsdf.exr')
+# film.develop()
