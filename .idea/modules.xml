@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MitsubaRenderer.iml" filepath="$PROJECT_DIR$/.idea/MitsubaRenderer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MistubaRenderer.iml" filepath="$PROJECT_DIR$/.idea/MistubaRenderer.iml" />
     </modules>
   </component>
 </project>
