@@ -18,7 +18,7 @@ def render_scene():
     register_bsdf("mydiffusebsdf", lambda props: MyDiffuseBSDF(props))
 
     # Absolute or relative path to the XML file
-    filename = 'path/to/my/scene.xml'
+    filename = '/home/ubuntu/PycharmProjects/MistubaRenderer/material-testball/scene.xml'
 
     # Add the scene directory to the FileResolver's search path
     Thread.thread().file_resolver().append(os.path.dirname(filename))
@@ -33,7 +33,7 @@ def render_scene():
     film = scene.sensors()[0].film()
 
     # Write out rendering as high dynamic range OpenEXR file
-    out_path = '/path/to/test_image'
+    out_path = '/home/ubuntu/PycharmProjects/MistubaRenderer/material-testball/testball2'
 
     film.set_destination_file(out_path + ".exr")
     film.develop()
@@ -44,7 +44,7 @@ def render_scene():
     bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.UInt8, srgb_gamma=True).write(out_path + ".jpg")
 
     # plot out the rendered image
-    plt.show(out_path + ".jpg")
+    # plt.show(out_path + ".jpg")
 
     # Get linear pixel values as a numpy array for further processing
     bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
