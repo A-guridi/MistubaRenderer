@@ -31,7 +31,7 @@
 		<string name="distribution" value="ggx" />
 		<float name="int_ior" value="1.7" />
 		<float name="ext_ior" value="1" />
-		<float name="aplha" value="0.1" />
+		<float name="alpha" value="0.1" />
 	</bsdf>
 	<bsdf type="dielectric" id="Material" >
 			<float name="int_ior" value="1.7" />
@@ -78,7 +78,7 @@
 		<transform name="to_world" >
 			<matrix value="0.482906 0 0 0.156382 0 0.482906 0 0.777229 0 0 0.482906 0.161698 0 0 0 1"/>
 		</transform>
-		<ref id="myBSDF" />
+		<ref id="Material" />
 	</shape>
 	<shape type="obj" >
 		<string name="filename" value="models/Mesh000.obj" />
