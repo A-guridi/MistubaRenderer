@@ -27,7 +27,11 @@
 			<rgb name="eta" value="0.200438, 0.924033, 1.10221"/>
 			<rgb name="k" value="3.91295, 2.45285, 2.14219"/>
 	</bsdf>
-	<bsdf type="mydiffusebsdf" id="myBSDF" >
+	<bsdf type="pplastic" id="myBSDF" >
+		<string name="distribution" value="ggx" />
+		<float name="int_ior" value="1.7" />
+		<float name="ext_ior" value="1" />
+		<float name="aplha" value="0.1" />
 	</bsdf>
 	<bsdf type="dielectric" id="Material" >
 			<float name="int_ior" value="1.7" />
@@ -46,6 +50,16 @@
 			</texture>
 		</bsdf>
 	</bsdf>
+	<bsdf type="polarizer" id="filter">
+    	<spectrum name="theta" value="0"/>
+	</bsdf>
+	<shape type="rectangle" >
+		<transform name="to_world" >
+			<translate z="0.1" />
+			<matrix value="-0.721367 -0.373123 -0.583445 3.04068 -8.26273e-008 0.842456 -0.538765 3.17153 0.692553 -0.388647 -0.60772 3.20454 0 0 0 1"/>
+		</transform>
+		<ref id="filter" />
+	</shape>
 	<shape type="rectangle" >
 		<transform name="to_world" >
 			<matrix value="-1.88298 1.9602 2.50299e-007 -0.708772 -2.37623e-007 1.18811e-007 -2.71809 0 -1.9602 -1.88298 8.90586e-008 -0.732108 0 0 0 1"/>

@@ -5,7 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 # Set the desired mitsuba variant
-mitsuba.set_variant('scalar_rgb')
+mitsuba.set_variant('scalar_spectral_polarized')
 
 from mitsuba.core import Bitmap, Struct, Thread
 from mitsuba.core.xml import load_file
@@ -15,7 +15,7 @@ from BSDF.diff_pol_bsdf import MyDiffuseBSDF
 
 def render_scene():
     # register the custom bsdf
-    register_bsdf("mydiffusebsdf", lambda props: MyDiffuseBSDF(props))
+    # register_bsdf("mydiffusebsdf", lambda props: MyDiffuseBSDF(props))
 
     # Absolute or relative path to the XML file
     filename = '/home/ubuntu/PycharmProjects/MistubaRenderer/material-testball/scene.xml'
