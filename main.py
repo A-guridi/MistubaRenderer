@@ -15,13 +15,14 @@ from mitsuba.render import register_bsdf
 # from BSDF.diff_pol_bsdf import MyDiffuseBSDF
 
 def render_stokes_images(p_bitmap, outpath):
-    array = np.array(p_bitmap).astype('float32')      # Matplotlib doesn't support saving of 16bit images
+    # note that for rendering meaninful stokes parameters, the filter should be removed from the .xml file
+    array = np.array(p_bitmap).astype('float32')  # Matplotlib doesn't support saving of 16bit images
     print("Numpy array shape", array.shape)
     # Channels 0-3: RGBA normal image
     rgba = array[:, :, :4]
 
     # Save normal image. Here, we apply the most simple form of tonemapping + clipping
-    plt.imsave(f"{outpath}_normal.jpg", np.clip(rgba ** (1 / 2.2), 0, 1))
+    plt.imsave(f"{outpath}_s0.jpg", np.clip(rgba ** (1 / 2.2), 0, 1))
 
     # Channels 4-6:   S0 same as normal, s0 = intensity
     s0 = array[:, :, 4:7]
@@ -34,10 +35,14 @@ def render_stokes_images(p_bitmap, outpath):
 
     # S1 - S3 encode positive and negative values, so as an example we just write
     # out the "R" channels using a colormap and some arbitrary scale.
-    plt.imsave(f"{outpath}_s0.jpg", s0[:, :, 0], cmap='coolwarm', vmin=-0.01, vmax=+0.01)
-    plt.imsave(f"{outpath}_s1.jpg", s1[:, :, 0], cmap='coolwarm', vmin=-0.01, vmax=+0.01)
-    plt.imsave(f"{outpath}_s2.jpg", s2[:, :, 0], cmap='coolwarm', vmin=-0.01, vmax=+0.01)
-    plt.imsave(f"{outpath}_s3.jpg", s3[:, :, 0], cmap='coolwarm', vmin=-0.001, vmax=+0.001)
+    print(np.max(s1))
+    print(np.min(s1))
+    vmin = -0.01
+    vmax = 0.01
+    plt.imsave(f"{outpath}_s1.jpg", s1[:, :, 1], cmap='turbo', vmin=vmin, vmax=vmax)
+    plt.imsave(f"{outpath}_s2.jpg", s2[:, :, 1], cmap='turbo', vmin=vmin, vmax=vmax)
+    plt.imsave(f"{outpath}_s3.jpg", s3[:, :, 1], cmap='jet', vmin=vmin * 0.1, vmax=vmax * 0.1)
+
 
 
 def render_scene():
@@ -68,9 +73,8 @@ def render_scene():
 
     # Write out a tonemapped JPG of the same rendering
     stokes = True
-    bmp = film.bitmap(raw=True)
-
     if stokes:
+        bmp = Bitmap(out_path + ".exr")
         render_stokes_images(bmp, out_path)
     else:
         bmp = film.bitmap(raw=True)
@@ -87,4 +91,6 @@ def render_scene():
 
 
 if __name__ == '__main__':
-    render_scene()
+    out_path = '/home/ubuntu/PycharmProjects/MistubaRenderer/material-testball/testball_stokes' + str(0)
+    bmp = Bitmap(out_path + ".exr")
+    render_stokes_images(bmp, out_path)
