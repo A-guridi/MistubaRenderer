@@ -14,6 +14,32 @@ from mitsuba.render import register_bsdf
 
 # from BSDF.diff_pol_bsdf import MyDiffuseBSDF
 
+def render_stokes_images(p_bitmap, outpath):
+    array = np.array(p_bitmap).astype('float32')      # Matplotlib doesn't support saving of 16bit images
+    print("Numpy array shape", array.shape)
+    # Channels 0-3: RGBA normal image
+    rgba = array[:, :, :4]
+
+    # Save normal image. Here, we apply the most simple form of tonemapping + clipping
+    plt.imsave(f"{outpath}_normal.jpg", np.clip(rgba ** (1 / 2.2), 0, 1))
+
+    # Channels 4-6:   S0 same as normal, s0 = intensity
+    s0 = array[:, :, 4:7]
+    # Channels 7-9:   S1 (written as RGB)
+    s1 = array[:, :, 7:10]
+    # Channels 10-12: S2 (written as RGB)
+    s2 = array[:, :, 10:13]
+    # Channels 13-15: S3 (written as RGB)
+    s3 = array[:, :, 13:]
+
+    # S1 - S3 encode positive and negative values, so as an example we just write
+    # out the "R" channels using a colormap and some arbitrary scale.
+    plt.imsave(f"{outpath}_s0.jpg", s0[:, :, 0], cmap='coolwarm', vmin=-0.01, vmax=+0.01)
+    plt.imsave(f"{outpath}_s1.jpg", s1[:, :, 0], cmap='coolwarm', vmin=-0.01, vmax=+0.01)
+    plt.imsave(f"{outpath}_s2.jpg", s2[:, :, 0], cmap='coolwarm', vmin=-0.01, vmax=+0.01)
+    plt.imsave(f"{outpath}_s3.jpg", s3[:, :, 0], cmap='coolwarm', vmin=-0.001, vmax=+0.001)
+
+
 def render_scene():
     # register the custom bsdf
     # register_bsdf("mydiffusebsdf", lambda props: MyDiffuseBSDF(props))
@@ -43,37 +69,21 @@ def render_scene():
     # Write out a tonemapped JPG of the same rendering
     stokes = True
     bmp = film.bitmap(raw=True)
-    images = bmp.split()
-    print(len(images))
-    height = images[0][1].height()
-    width = images[0][1].width()
 
-    image = images[0][1]
-    image.accumulate(images[1][1])
-    image.accumulate(images[2][1])
-    image.accumulate(images[3][1])
-    image.convert(Bitmap.PixelFormat.RGB, Struct.Type.UInt8, srgb_gamma=True).write(out_path + f"original.jpg")
     if stokes:
-        image = images[4][1]
-        image.convert(Bitmap.PixelFormat.Y, Struct.Type.UInt8, srgb_gamma=True).write(out_path + f"{0}.jpg")
-        for i in range(5, 17, 4):
-            image = images[i][1]
-            image.accumulate(images[i + 1][1])
-            image.accumulate(images[i + 2][1])
-            image.accumulate(images[i + 3][1])
-            image.convert(Bitmap.PixelFormat.RGB, Struct.Type.UInt8, srgb_gamma=True).write(out_path + f"{i}.jpg")
-
+        render_stokes_images(bmp, out_path)
     else:
         bmp = film.bitmap(raw=True)
         bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.UInt8, srgb_gamma=True).write(out_path + ".jpg")
 
-    # plot out the rendered image
-    # plt.show(out_path + ".jpg")
+        # plot out the rendered image
+        plt.imshow(out_path + ".jpg")
+        plt.show()
 
-    # Get linear pixel values as a numpy array for further processing
-    # bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
-    # image_np = np.array(bmp_linear_rgb)
-    # print(image_np.shape)
+        # Get linear pixel values as a numpy array for further processing
+        bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
+        image_np = np.array(bmp_linear_rgb)
+        print(image_np.shape)
 
 
 if __name__ == '__main__':
