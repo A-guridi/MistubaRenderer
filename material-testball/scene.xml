@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<scene version="2.0.0" >
-	<integrator type="path" >
-		<integer name="max_depth" value="35" />
+<scene version="2.2.1" >
+	<default name="filter_angle" value="0"/>
+	<integrator type="stokes" >
+		<integrator type="path" >
+			<integer name="max_depth" value="35" />
+		</integrator>
 	</integrator>
 	<sensor type="perspective" >
 		<float name="fov" value="35" />
@@ -10,11 +13,11 @@
 			<matrix value="-0.721367 -0.373123 -0.583445 3.04068 -8.26273e-008 0.842456 -0.538765 3.17153 0.692553 -0.388647 -0.60772 3.20454 0 0 0 1"/>
 		</transform>
 		<sampler type="orthogonal" >
-			<integer name="sample_count" value="25" />
+			<integer name="sample_count" value="49" />
 		</sampler>
 		<film type="hdrfilm" >
-			<integer name="width" value="720" />
-			<integer name="height" value="480" />
+			<integer name="width" value="1280" />
+			<integer name="height" value="720" />
 			<string name="file_format" value="openexr" />
 			<string name="pixel_format" value="rgb" />
 			<rfilter type="tent" />
@@ -51,7 +54,7 @@
 		</bsdf>
 	</bsdf>
 	<bsdf type="polarizer" id="filter">
-    	<spectrum name="theta" value="0"/>
+    	<spectrum name="theta" value="$filter_angle"/>
 	</bsdf>
 	<shape type="rectangle" >
 		<transform name="to_world" >
@@ -78,7 +81,7 @@
 		<transform name="to_world" >
 			<matrix value="0.482906 0 0 0.156382 0 0.482906 0 0.777229 0 0 0.482906 0.161698 0 0 0 1"/>
 		</transform>
-		<ref id="Material" />
+		<ref id="myBSDF" />
 	</shape>
 	<shape type="obj" >
 		<string name="filename" value="models/Mesh000.obj" />
