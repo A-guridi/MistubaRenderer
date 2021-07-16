@@ -36,17 +36,17 @@ def render_stokes_images(p_bitmap, outpath):
     # out the "R" channels using a colormap and some arbitrary scale.
     vmin = -0.01
     vmax = 0.01
-    plt.imsave(f"{outpath}_s1.jpg", s1[:, :, 1], cmap='turbo', vmin=vmin, vmax=vmax)
-    plt.imsave(f"{outpath}_s2.jpg", s2[:, :, 1], cmap='turbo', vmin=vmin, vmax=vmax)
-    plt.imsave(f"{outpath}_s3.jpg", s3[:, :, 1], cmap='jet', vmin=vmin * 0.1, vmax=vmax * 0.1)
+    plt.imsave(f"{outpath}_s1.jpg", s1[:, :, 0], cmap='turbo', vmin=vmin, vmax=vmax)
+    plt.imsave(f"{outpath}_s2.jpg", s2[:, :, 0], cmap='turbo', vmin=vmin, vmax=vmax)
+    plt.imsave(f"{outpath}_s3.jpg", s3[:, :, 0], cmap='gray', vmin=vmin * 0.1, vmax=vmax * 0.1)
 
     # AOLP and DOLP calculation
 
     dolp = np.sqrt(s1 ** 2 + s2 ** 2) / s0  # dolp=sqrt(s1**2+s2**2)/s0
     aolp = 0.5 * np.arctan(s1 / (s2 + 1e-10))  # aolp =0.5*arctan(s1/s2)
 
-    plt.imsave(f"{outpath}_dolp.jpg", dolp[:, :, 1], cmap='gray', vmin=vmin, vmax=vmax)
-    plt.imsave(f"{outpath}_aolp.jpg", aolp[:, :, 1], cmap='gray', vmin=vmin, vmax=vmax)
+    plt.imsave(f"{outpath}_dolp.jpg", dolp[:, :, 0], cmap='Greys', vmin=vmin*10, vmax=vmax*10)
+    plt.imsave(f"{outpath}_aolp.jpg", aolp[:, :, 0], cmap='Greys', vmin=vmin*10, vmax=vmax*10)
 
 
 def render_scene(outpath, scene, filter_angle=None):
@@ -106,5 +106,9 @@ if __name__ == '__main__':
     scene = '/home/ubuntu/PycharmProjects/MistubaRenderer/material-testball/scene'
     scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
     angles = [0.0, 45.0, 90.0, 135.0, None]
+
+    # uncomment the loop for full render
     for sc, angle in zip(scenes, angles):
         render_scene(out_path, sc, angle)
+    # uncomment this one for rendering only the stokes parameters given an existing .exr file
+    # render_stokes_images(Bitmap(out_path + "stokes.exr"), out_path+"stokes")
