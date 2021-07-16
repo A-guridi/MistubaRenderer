@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <scene version="2.2.1" >
-	<default name="filter_angle" value="0"/>
+<!--	<default name="filter_angle" value="0"/>-->
 	<integrator type="stokes" >
 		<integrator type="path" >
 			<integer name="max_depth" value="35" />
@@ -53,9 +53,9 @@
 			</texture>
 		</bsdf>
 	</bsdf>
-	<bsdf type="polarizer" id="filter">
+	<!--<bsdf type="polarizer" id="filter">
     	<spectrum name="theta" value="$filter_angle"/>
-	</bsdf>
+	</bsdf>-->
 
 	<!--<shape type="rectangle" >
 		<transform name="to_world" >
