@@ -43,6 +43,13 @@ def render_stokes_images(p_bitmap, outpath):
     plt.imsave(f"{outpath}_s2.jpg", s2[:, :, 1], cmap='turbo', vmin=vmin, vmax=vmax)
     plt.imsave(f"{outpath}_s3.jpg", s3[:, :, 1], cmap='jet', vmin=vmin * 0.1, vmax=vmax * 0.1)
 
+    # AOLP and DOLP calculation
+
+    dolp = np.sqrt(s1 ** 2 + s2 ** 2) / 2.0  # dolp=sqrt(s1**2+s2**2)/s0
+    aolp = 0.5 * np.arctan(s1 / s2)  # aolp =0.5*arctan(s1/s2)
+
+    plt.imsave(f"{outpath}_dolp.jpg", dolp[:, :, 1], cmap='Greys', vmin=vmin, vmax=vmax)
+    plt.imsave(f"{outpath}_aolp.jpg", aolp[:, :, 1], cmap='Greys', vmin=vmin, vmax=vmax)
 
 
 def render_scene():
