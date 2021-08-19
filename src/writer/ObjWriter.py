@@ -1,3 +1,8 @@
+"""
+Custom module to write the file to a blender file, which can be then read
+by the Mitsuba2Blender API and exported into a Mitsuba file
+
+"""
 import bpy
 from src.main.Module import Module
 

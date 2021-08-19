@@ -123,11 +123,11 @@ def render_scene(outpath, scene, filter_angle=None, camera_file=None):
 
 
 if __name__ == '__main__':
-    out_path = '/home/ubuntu/PycharmProjects/MistubaRenderer/test_blender/test_scene_'
+    out_path = '/home/ubuntu/PycharmProjects/MistubaRenderer/Mitsuba2/test_blender/test_scene_'
     # bmp = Bitmap(out_path + ".exr")
-    scene = '/home/ubuntu/PycharmProjects/MistubaRenderer/test_blender/example'
+    scene = '/home/ubuntu/PycharmProjects/MistubaRenderer/Mitsuba2/test_blender/example'
     scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
-    camera_file = "/home/ubuntu/PycharmProjects/BlenderProc/examples/datasets/bop_object_on_surface_sampling/out/bop_data/lm/train_pbr/000000/scene_camera.json"
+    camera_file = "C:/Users/Arturo/PycharmProjects/MistubaRenderer/examples/datasets/bop_object_on_surface_sampling/out/bop_data/lm/train_pbr/000000/scene_camera.json"
     angles = [0.0, 45.0, 90.0, 135.0, None]
 
     # uncomment the loop for full render
