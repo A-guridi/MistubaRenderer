@@ -1,0 +1,84 @@
+# Args: <path_to_bop_data> <bop_datset_name> <bop_toolkit_path> <output_dir>
+{
+  "version": 3,
+  "setup": {
+    "blender_install_path": "/home_local/<env:USER>/blender/",
+    "pip": [
+      "h5py",
+      "scikit-image",
+      "pypng==0.0.20",
+      "scipy",
+      "matplotlib",
+      "pytz"
+    ]
+  },
+  "modules": [
+    {
+      "module": "main.Initializer",
+      "config": {
+        "global": {
+          "output_dir": "<args:3>",
+          "sys_paths": ["<args:2>"] # path to the bop toolkit
+        }
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "source_frame": ["X", "-Y", "-Z"],
+        "bop_dataset_path": "<args:0>/<args:1>",
+        "mm2m": True,
+        "split": "test", # careful, some BOP datasets only have test sets
+        "scene_id": 1,
+        "model_type": ""
+      }
+    },
+    {
+      "module": "lighting.LightSampler",
+      "config": {
+        "lights": [
+          {
+            "location": {
+              "provider": "sampler.Shell",
+              "center": [0, 0, -0.8],
+              "radius_min": 2,
+              "radius_max": 4,
+              "elevation_min": 40,
+              "elevation_max": 89
+            },
+            "type": "POINT",
+            "energy": 1000
+          }
+        ]
+      }
+    },
+    {
+      "module": "renderer.RgbRenderer",
+      "config": {
+        "samples": 50,
+        "render_distance": True
+      }
+    },
+    {
+      "module": "renderer.SegMapRenderer",
+      "config": {
+        "map_by": "instance"
+      }
+    },
+    {
+      "module": "writer.BopWriter",
+      "config": {
+        "dataset": "<args:1>",
+        "save_world2cam": False, # world coords are arbitrary in most real BOP datasets
+        "postprocessing_modules": {
+          "distance": [
+            {"module": "postprocessing.Dist2Depth"}
+          ]
+        }
+      }
+    },
+    {
+      "module": "writer.Hdf5Writer"
+    }
+  ]
+}

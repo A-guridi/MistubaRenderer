@@ -1,0 +1,2 @@
+
+python run.py examples/datasets/bop_challenge/config_lm_upright.yaml /home/ubuntu/renders/lm lm /home/ubuntu/renders/bop_toolkit resources/cctextures examples/datasets/bop_object_on_surface_sampling/output
