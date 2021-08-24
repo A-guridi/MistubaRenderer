@@ -54,20 +54,29 @@ def get_camera_angles(cam_file):
     cam_file = os.path.abspath(cam_file)
     with open(cam_file, 'r') as cfile:
         cam = json.load(cfile)
+    # open the matrices and shape them like rotation matrices
     cam_K = np.array(cam["0"]["cam_K"]).reshape((3, 3))
     cam_R = np.array(cam["0"]["cam_R_w2c"]).reshape((3, 3))
-    cam_T = np.arra(cam["0"]["cam_t_w2c"]).reshape((3, 1))
+    cam_T = np.array(cam["0"]["cam_t_w2c"])
+    # multiply and assert dimensions
     cam_R = np.matmul(cam_K, cam_R)
     cam_T = np.matmul(cam_K, cam_T)
-    assert (cam_R.shape == (3, 3), "Wrong input cam_R shape")
-    assert (len(cam_T) == 3, "Wrong input cam_T")
-    x_rot = [str(c) for c in cam_R[0:3]] + [str(cam_T[0])]
-    y_rot = [str(c) for c in cam_R[3:6]] + [str(cam_T[1])]
-    z_rot = [str(c) for c in cam_R[6:]] + [str(cam_T[2])]
-    rot_mat = x_rot + y_rot + z_rot + ["0", "0", "0", "1"]
+    assert cam_R.shape == (3, 3), "Wrong input cam_R shape"
+    assert len(cam_T) == 3, "Wrong input cam_T"
+    # we store them in a 4x4 matrix with the rotation and translation vectors
+    rot_mat = np.zeros(shape=(4, 4))
+    rot_mat[:3, :3] = cam_R
+    rot_mat[:3, 3] = cam_T.flatten()
+    rot_mat[3, 3] = 1
+    # we invert to have a camera-to-world matrix
+    rot_mat = np.linalg.inv(rot_mat)
+    # transform it into a string list
+    rot_mat = list(rot_mat.flatten())
+    rot_mat = [str(c) for c in rot_mat]
     rot_string = ""
     for ele in rot_mat:
         rot_string += ele + " "
+    print(rot_string)
     return rot_string
 
 
@@ -83,6 +92,7 @@ def render_scene(outpath, scene, filter_angle=None, camera_file=None):
     # Add the scene directory to the FileResolver's search path
     Thread.thread().file_resolver().append(os.path.dirname(scene))
 
+    print("saving scene to", outpath)
     if filter_angle is None:
         # for the case where we have no polarizing filter
         stokes = True
@@ -132,7 +142,7 @@ if __name__ == '__main__':
     # bmp = Bitmap(out_path + ".exr")
     scene = '/home/ubuntu/PycharmProjects/MistubaRenderer/Mitsuba2/test_blender/example'
     scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
-    camera_file = "C:/Users/Arturo/PycharmProjects/MistubaRenderer/examples/datasets/bop_object_on_surface_sampling/out/bop_data/lm/train_pbr/000000/scene_camera.json"
+    camera_file = "/home/ubuntu/PycharmProjects/MistubaRenderer/examples/datasets/bop_object_on_surface_sampling/output/bop_data/lm/train_pbr/000000/scene_camera.json"
     angles = [0.0, 45.0, 90.0, 135.0, None]
 
     # uncomment the loop for full render

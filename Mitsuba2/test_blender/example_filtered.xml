@@ -20,15 +20,15 @@
 		<float name="fov" value="58"/>
 		<float name="near_clip" value="0.0100000"/>
 		<float name="far_clip" value="1000.000000"/>
-		<transform name="to_world">
+		<!--<transform name="to_world">
 			<rotate x="1" angle="166.2375016804608"/>
 			<rotate y="1" angle="-21.88792176138531"/>
 			<rotate z="1" angle="-137.18850223472148"/>
 			<translate value="0.022310 0.145142 0.853963"/>
-		</transform>
-		<!--<transform name="to_world" >
-			<matrix value="$rot_matrix"/>
 		</transform>-->
+		<transform name="to_world" >
+			<matrix value="$rot_matrix"/>
+		</transform>
 		<sampler type="orthogonal">
 			<integer name="sample_count" value="$spp"/>
 		</sampler>
@@ -92,11 +92,15 @@
 
 <!-- Shapes -->
 	<shape type="rectangle" >
-		<transform name="to_world" >
+		<!--<transform name="to_world" >
 			<rotate x="1" angle="166.2375016804608"/>
 			<rotate y="1" angle="-21.88792176138531"/>
 			<rotate z="1" angle="-137.18850223472148"/>
 			<translate value="0.022310 0.145142 0.753963"/>
+		</transform>-->
+		<transform name="to_world" >
+			<matrix value="$rot_matrix"/>
+			<translate value="0 0 0.1"/>
 		</transform>
 		<ref id="filter" />
 	</shape>
