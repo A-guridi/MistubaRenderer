@@ -54,11 +54,16 @@ def get_camera_angles(cam_file):
     cam_file = os.path.abspath(cam_file)
     with open(cam_file, 'r') as cfile:
         cam = json.load(cfile)
-    camR = cam["0"]["cam_R_w2c"]
-    camT = cam["0"]["cam_t_w2c"]
-    x_rot = [str(c) for c in camR[0:3]] + [str(camT[0])]
-    y_rot = [str(c) for c in camR[3:6]] + [str(camT[1])]
-    z_rot = [str(c) for c in camR[6:]] + [str(camT[2])]
+    cam_K = np.array(cam["0"]["cam_K"]).reshape((3, 3))
+    cam_R = np.array(cam["0"]["cam_R_w2c"]).reshape((3, 3))
+    cam_T = np.arra(cam["0"]["cam_t_w2c"]).reshape((3, 1))
+    cam_R = np.matmul(cam_K, cam_R)
+    cam_T = np.matmul(cam_K, cam_T)
+    assert (cam_R.shape == (3, 3), "Wrong input cam_R shape")
+    assert (len(cam_T) == 3, "Wrong input cam_T")
+    x_rot = [str(c) for c in cam_R[0:3]] + [str(cam_T[0])]
+    y_rot = [str(c) for c in cam_R[3:6]] + [str(cam_T[1])]
+    z_rot = [str(c) for c in cam_R[6:]] + [str(cam_T[2])]
     rot_mat = x_rot + y_rot + z_rot + ["0", "0", "0", "1"]
     rot_string = ""
     for ele in rot_mat:
