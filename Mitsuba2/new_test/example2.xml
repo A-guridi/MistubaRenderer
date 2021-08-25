@@ -1,0 +1,118 @@
+<scene version="2.2.1">
+
+<!-- Defaults, these can be set via the command line: -Darg=value -->
+
+	<default name="spp" value="100"/>
+	<default name="resx" value="640"/>
+	<default name="resy" value="480"/>
+	<default name="rot_matrix" value="0"/>
+
+<!-- Camera and Rendering Parameters -->
+	<integrator type="stokes">
+		<integrator type="path">
+			<integer name="max_depth" value="35"/>
+		</integrator>
+	</integrator>
+	<sensor type="perspective">
+		<string name="fov_axis" value="x"/>
+		<float name="fov" value="58.413745"/>
+		<float name="near_clip" value="0.100000"/>
+		<float name="far_clip" value="1000.000000"/>
+		<!--<transform name="to_world">
+			<rotate x="1" angle="106.00666010742977"/>
+			<rotate y="1" angle="-73.2195800912125"/>
+			<rotate z="1" angle="-91.934762869911"/>
+			<translate value="0.992779 0.286950 0.039409"/>
+		</transform>-->
+		<transform name="to_world" >
+			<matrix value="$rot_matrix"/>
+		</transform>
+		<sampler type="orthogonal">
+			<integer name="sample_count" value="$spp"/>
+		</sampler>
+		<film type="hdrfilm">
+			<integer name="width" value="$resx"/>
+			<integer name="height" value="$resy"/>
+			<string name="file_format" value="openexr" />
+			<string name="pixel_format" value="rgb" />
+			<rfilter type="tent" />
+		</film>
+	</sensor>
+
+<!-- Materials -->
+
+	<bsdf type="diffuse" id="mat-bop_lm_vertex_col_material">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-bop_lm_vertex_col_material.002">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-PavingStones031">
+		<rgb value="0.300000 0.300000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="empty-emitter-bsdf">
+		<rgb value="0.000000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="pplastic" id="myBSDF1" >
+		<string name="distribution" value="ggx" />
+		<float name="int_ior" value="1.7" />
+		<float name="ext_ior" value="1" />
+		<float name="alpha" value="0.1" />
+		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>
+	</bsdf>
+	<bsdf type="pplastic" id="myBSDF2" >
+		<string name="distribution" value="ggx" />
+		<float name="int_ior" value="1.7" />
+		<float name="ext_ior" value="1" />
+		<float name="alpha" value="0.1" />
+		<rgb value="0.600000 0.400000 0.400000" name="diffuse_reflectance"/>
+	</bsdf>
+
+<!-- Emitters -->
+
+	<emitter type="constant">
+		<rgb value="0.050000 0.050000 0.050000" name="radiance"/>
+	</emitter>
+	<shape type="ply">
+		<string name="filename" value="meshes/light_plane.ply"/>
+		<ref id="empty-emitter-bsdf" name="bsdf"/>
+		<emitter type="area">
+			<rgb value="2.813445 2.859491 4.381475" name="radiance"/>
+		</emitter>
+	</shape>
+	<emitter type="point">
+		<point name="position" x="0.3144863545894623" y="0.8799998164176941" z="-0.8519041538238525"/>
+		<rgb value="14.820006 10.239716 14.625877" name="intensity"/>
+	</emitter>
+
+<!-- Shapes -->
+
+	<shape type="ply">
+		<string name="filename" value="meshes/obj_000009.ply"/>
+		<ref id="myBSDF1" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/obj_000006.ply"/>
+		<ref id="myBSDF2" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane0.ply"/>
+		<ref id="mat-PavingStones031" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane1.ply"/>
+		<ref id="mat-PavingStones031" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane2.ply"/>
+		<ref id="mat-PavingStones031" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane4.ply"/>
+		<ref id="mat-PavingStones031" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane5.ply"/>
+		<ref id="mat-PavingStones031" name="bsdf"/>
+	</shape>
+</scene>
