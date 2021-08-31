@@ -8,14 +8,14 @@ output.mkdir()
 
 examples = (Path(__file__).absolute().parent.parent / "examples")
 
-for example in examples.rglob("**/README.md"):
+for example in examples.rglob("**/README_old.md"):
     output_example = Path(str(example).replace(str(examples), str(output))).parent
     output_example.mkdir(exist_ok=True, parents=True)
 
-    shutil.copy(str(example), str(output_example / "README.md"))
+    shutil.copy(str(example), str(output_example / "README_old.md"))
 
 shutil.copytree(examples.parent / "images", output.parent / "images")
-shutil.copy(examples.parent / "README.md", output.parent)
+shutil.copy(examples.parent / "README_old.md", output.parent)
 shutil.copy(examples.parent / "change_log.md", output.parent)
 shutil.copy(examples.parent / "CONTRIBUTING.md", output.parent)
 
