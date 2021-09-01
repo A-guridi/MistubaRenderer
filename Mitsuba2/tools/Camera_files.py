@@ -3,6 +3,13 @@ import json
 import os
 
 
+def rot_z(angle):
+    # get angle in degress and create a rotation matrix in Z
+    angle *= np.pi / 180
+    return np.array([[np.cos(angle), -np.sin(angle), 0, 0], [np.sin(angle), np.cos(angle), 0, 0],
+                     [0, 0, 1, 0], [0, 0, 0, 1]])
+
+
 class CameraReader:
     def __init__(self, camera_file):
         self.camera_file_path = camera_file
@@ -13,10 +20,8 @@ class CameraReader:
     def get_amount_of_pictures(self):
         return len(self.cam_dict.keys())
 
-    def get_camera_angles_one_pic(self, picture_number=None):
+    def get_camera_angles_one_pic(self, picture_number=2):
         # open the matrices and shape them like rotation matrices
-        if picture_number is None:
-            picture_number = 12
 
         cam_R = np.array(self.cam_dict[str(picture_number)]["cam_R_w2c"]).reshape((3, 3))
         cam_T = np.array(self.cam_dict[str(picture_number)]["cam_t_w2c"]) / 1000.0
@@ -32,18 +37,21 @@ class CameraReader:
         sec_row = -rot_mat[1, :]
         rot_mat[1, :] = rot_mat[2, :]
         rot_mat[2, :] = sec_row
+        # rot_mat[0, 0] *= -1
+        # rot_mat[0, 2] *= -1
         # transform it into a string list
+        rot_mat_z = rot_z(180)
+        rot_mat = np.matmul(rot_mat, rot_mat_z)
         rot_mat = list(rot_mat.flatten())
         rot_mat = [str(c) for c in rot_mat]
         rot_string = ""
         for ele in rot_mat:
             rot_string += ele + " "
-        print(rot_string)
+        # print(rot_string)
         return rot_string
 
     def get_camera_angles_all_pics(self):
-        number_of_pics = self.get_amount_of_pictures()
         camera_angles = []
-        for pic in range(number_of_pics):
+        for pic in range(self.get_amount_of_pictures()):
             camera_angles.append(self.get_camera_angles_one_pic(pic))
         return camera_angles

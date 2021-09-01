@@ -16,14 +16,17 @@ from Mitsuba2.tools.Camera_files import CameraReader
 
 
 class Renderer:
-    def __init__(self, output_path, scene, filter_angle=None, camera_file=None):
+    def __init__(self, output_dir, scene, filter_angle=None, camera_file=None, res_x=1080, res_y=720, spp=121):
         """
-        :param output_path: the output folder where the images will be sotred
+        :param output_dir: the output folder where the images will be sotred
         :param scene: the .xml file where the scene is to be rendered
         :param filter_angle: the polarizing angle of the filter. If None, the renderer will generate instead the 4 stokes
                             parameters and the dolp and aolp
         """
-        self.output_path = output_path
+        self.output_dir = output_dir
+        if not os.path.isdir(output_dir):
+            os.mkdir(output_dir)
+        self.output_path = self.output_dir + "image"
         self.scene = scene
         self.scenes = [self.scene + '_filtered.xml'] * 4 + [self.scene + '.xml']
         self.stokes = [False] * 4 + [True]
@@ -31,11 +34,14 @@ class Renderer:
             if type(filter_angle) is not list:
                 raise TypeError("Filter Angle must be a list of anlges")
             else:
-                self.filter_angles=filter_angle
+                self.filter_angles = filter_angle
         else:
             self.filter_angles = [0.0, 45.0, 90.0, 135.0]
         if camera_file is not None:
             self.CameraReader = CameraReader(camera_file)
+        self.res_x = res_x
+        self.res_y = res_y
+        self.spp=spp
 
     def render_stokes_images(self, p_bitmap):
         # note that for rendering meaninful stokes parameters, the filter should be removed from the .xml file
@@ -71,7 +77,7 @@ class Renderer:
         plt.imsave(f"{self.output_path}_dolp.jpg", dolp[:, :, 0], cmap='Greys', vmin=vmin * 10, vmax=vmax * 10)
         plt.imsave(f"{self.output_path}_aolp.jpg", aolp[:, :, 0], cmap='Greys', vmin=vmin * 10, vmax=vmax * 10)
 
-    def render_scene(self, current_scene, filter_angle=0, stokes=False):
+    def render_scene(self, current_scene, filter_angle=0.0, stokes=False):
         """
         Function to render a scene
         """
@@ -87,12 +93,9 @@ class Renderer:
             self.output_path += str(int(filter_angle))
 
         # Load the actual scene
-        res_x = 1080
-        res_y = 720
-        spp = 121
         # load the axes of camera rotation
-        rot_mat = self.CameraReader.get_camera_angles_one_pic()
-        local_scene = load_file(current_scene, filter_angle=filter_angle, resx=res_x, resy=res_y, spp=spp,
+        rot_mat = self.CameraReader.get_camera_angles_one_pic(13)
+        local_scene = load_file(current_scene, filter_angle=filter_angle, resx=self.res_x, resy=self.res_y, spp=self.spp,
                                 rot_matrix=rot_mat)
         # Call the scene's integrator to render the loaded scene
         local_scene.integrator().render(local_scene, local_scene.sensors()[0])
@@ -117,7 +120,7 @@ class Renderer:
             # plt.show()
 
             # Get linear pixel values as a numpy array for further processing
-            bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
+            # bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
 
     def render_all(self):
         # renders all the images with the 4 angles and the stokes parameters
