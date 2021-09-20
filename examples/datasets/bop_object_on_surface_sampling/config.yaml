@@ -2,7 +2,7 @@
 {
   "version": 3,
   "setup": {
-    "blender_install_path": "/home/ubuntu/blender",
+    "blender_install_path": "/home_local/<env:USER>/blender/",
     "pip": [
       "h5py",
       "scikit-image",
@@ -343,12 +343,6 @@
         "samples": 50,
         "render_distance": True,
         "image_type": "JPEG"
-      }
-    },
-    {
-      "module": "writer.ObjWriter",
-      "config": {
-        "path": "/home/ubuntu/renders/blends/example.blend"
       }
     },
     {

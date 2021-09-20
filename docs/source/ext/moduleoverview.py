@@ -70,9 +70,9 @@ def generate_examples_sidebar(app, fromdocname, container):
             subtree = nodes.bullet_list()
             module_item += subtree
 
-            for example in sorted(example_groups.rglob("*/README_old.md"), key=lambda x: x.parent.name):
+            for example in sorted(example_groups.rglob("*/README.md"), key=lambda x: x.parent.name):
                 ref = nodes.reference('', '')
-                ref['refuri'] = app.builder.get_relative_uri(fromdocname, str(example).replace(str(examples), "examples").replace("README_old.md", "README"))
+                ref['refuri'] = app.builder.get_relative_uri(fromdocname, str(example).replace(str(examples), "examples").replace("README.md", "README"))
                 ref.append(nodes.Text(example.parent.name))
                 class_item = nodes.list_item('', addnodes.compact_paragraph('', '', ref), classes=["toctree-l2"])
 
