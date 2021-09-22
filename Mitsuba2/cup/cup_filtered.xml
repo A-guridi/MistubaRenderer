@@ -6,7 +6,7 @@
 	<default name="resx" value="612"/>
 	<default name="resy" value="512"/>
 	<default name="rot_matrix" value="0"/>
-	<default name="filterangle" value="0"/>
+	<default name="$filter_angle" value="0"/>
 	<default name="t_vector" value="0"/>
 
 <!-- Camera and Rendering Parameters -->
@@ -28,7 +28,7 @@
 		<transform name="to_world" >
 			<matrix value="$rot_matrix"/>
 		</transform>
-		<sampler type="orthogonal">
+		<sampler type="ldsampler">
 			<integer name="sample_count" value="$spp"/>
 		</sampler>
 		<film type="hdrfilm">
@@ -46,22 +46,22 @@
 		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane0_material">
-		<rgb value="0.300000 0.300000 0.300000" name="reflectance"/>
+		<rgb value="0.500000 0.500000 0.500000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane1_material">
-		<rgb value="0.300000 0.300000 0.300000" name="reflectance"/>
+		<rgb value="0.500000 0.500000 0.500000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane2_material">
-		<rgb value="0.300000 0.300000 0.300000" name="reflectance"/>
+		<rgb value="0.500000 0.500000 0.500000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane4_material">
-		<rgb value="0.300000 0.300000 0.300000" name="reflectance"/>
+		<rgb value="0.500000 0.500000 0.500000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane5_material">
-		<rgb value="0.300000 0.300000 0.300000" name="reflectance"/>
+		<rgb value="0.500000 0.500000 0.500000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="diffuse" id="empty-emitter-bsdf">
-		<rgb value="0.000000" name="reflectance"/>
+		<rgb value="0.500000" name="reflectance"/>
 	</bsdf>
 	<bsdf type="pplastic" id="myBSDF1" >
 		<texture type="bitmap" name="diffuse_reflectance">
@@ -86,19 +86,19 @@
 		<string name="filename" value="meshes/light_plane.ply"/>
 		<ref id="empty-emitter-bsdf" name="bsdf"/>
 		<emitter type="area">
-			<rgb value="5.641901 5.580404 5.788234" name="radiance"/>
+			<rgb value="13.641901 13.580404 13.788234" name="radiance"/>
 		</emitter>
 	</shape>
 	<emitter type="point">
 		<point name="position" x="0.4882829785346985" y="0.7494717240333557" z="-0.6065575480461121"/>
-		<rgb value="12.735381 14.977231 12.084909" name="intensity"/>
+		<rgb value="6.735381 6.977231 6.084909" name="intensity"/>
 	</emitter>
 
 <!-- Shapes -->
 	<shape type="rectangle" >
-		<transform name="to_world" >
+		<transform name="to_world">
 			<matrix value="$rot_matrix"/>
-			<translate value="0 0 -0.1"/>
+			<translate value="0 0 0.1"/>
 		</transform>
 		<ref id="filter" />
 	</shape>

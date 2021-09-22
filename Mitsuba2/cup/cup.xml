@@ -6,8 +6,9 @@
 	<default name="resx" value="612"/>
 	<default name="resy" value="512"/>
 	<default name="rot_matrix" value="0"/>
-	<default name="filterangle" value="0"/>
+	<default name="$filter_angle" value="0"/>
 	<default name="t_vector" value="0"/>
+	<default name="texture_file" value="0"/>
 
 <!-- Camera and Rendering Parameters -->
 	<integrator type="stokes">
@@ -29,7 +30,7 @@
 		<transform name="to_world" >
 			<matrix value="$rot_matrix"/>
 		</transform>
-		<sampler type="orthogonal">
+		<sampler type="ldsampler">
 			<integer name="sample_count" value="$spp"/>
 		</sampler>
 		<film type="hdrfilm">
@@ -84,12 +85,12 @@
 		<string name="filename" value="meshes/light_plane.ply"/>
 		<ref id="empty-emitter-bsdf" name="bsdf"/>
 		<emitter type="area">
-			<rgb value="5.641901 5.580404 5.788234" name="radiance"/>
+			<rgb value="13.641901 13.580404 13.788234" name="radiance"/>
 		</emitter>
 	</shape>
 	<emitter type="point">
 		<point name="position" x="0.4882829785346985" y="0.7494717240333557" z="-0.6065575480461121"/>
-		<rgb value="12.735381 14.977231 12.084909" name="intensity"/>
+		<rgb value="6.735381 6.977231 6.084909" name="intensity"/>
 	</emitter>
 
 <!-- Shapes -->

@@ -38,7 +38,7 @@ class Renderer:
             else:
                 self.filter_angles = filter_angle
         else:
-            self.filter_angles = [0.0, 45.0, 90.0, 135.0]
+            self.filter_angles = [0.0, 45.0, 90.0, 135.0, 0.0]
         if camera_file is not None:
             self.CameraReader = CameraReader(camera_file)
             self.num_images = self.CameraReader.get_amount_of_pictures()
@@ -98,6 +98,7 @@ class Renderer:
         # Load the actual scene
         # load the axes of camera rotation
         rot_mat = self.CameraReader.get_camera_angles_one_pic(im_number)
+
         local_scene = load_file(current_scene, filter_angle=filter_angle, resx=self.res_x, resy=self.res_y,
                                 spp=self.spp,
                                 rot_matrix=rot_mat)
@@ -133,7 +134,7 @@ class Renderer:
                               im_number=image_numer)
 
     def render_all_images(self):
-        for i in range(self.num_images):
+        for i in range(1, self.num_images):
             current_path = self.output_path + str(i)+"/"
             if not os.path.isdir(current_path):
                 os.mkdir(current_path)

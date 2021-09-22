@@ -25,5 +25,6 @@ if __name__ == '__main__':
                          spp=spp)
 
     # RenderObj.render_all_one_pose(out_path)
+    RenderObj.render_all_images()
 
 

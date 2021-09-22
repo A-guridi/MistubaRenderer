@@ -45,6 +45,7 @@ class CameraReader:
         rot_mat = list(rot_mat.flatten())
         rot_mat = [str(c) for c in rot_mat]
         rot_string = ""
+
         for ele in rot_mat:
             rot_string += ele + " "
         # print(rot_string)
