@@ -1,8 +1,6 @@
 import os
-import numpy as np
 import mitsuba
-import matplotlib
-import matplotlib.pyplot as plt
+
 
 # Set the desired mitsuba variant
 mitsuba.set_variant('scalar_spectral_polarized')
@@ -16,12 +14,12 @@ from Mitsuba2.core.Renderer import Renderer
 
 if __name__ == '__main__':
     """
-    out_path = '/home/ubuntu/PycharmProjects/MistubaRenderer/Mitsuba2/cup/'
+    out_path = '/home/arturo/renders/cup/mitsuba2/'
     # bmp = Bitmap(out_path + ".exr")
-    scene = '/home/ubuntu/renders/cup/cup_scene'
+    scene = '/home/arturo/renders/cup/cup_scene'
     scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
-    camera_file = '/home/ubuntu/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json'
-    res_x, res_y = 512, 512
+    camera_file = '/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json'
+    res_x, res_y = 612, 512
     spp = 256
     RenderObj = Renderer(output_dir=out_path, scene=scene, camera_file=camera_file, res_x=res_x, res_y=res_y,
                          spp=spp)
@@ -38,4 +36,4 @@ if __name__ == '__main__':
     RenderObj = Renderer(output_dir=out_path, scene=scene, camera_file=camera_file, res_x=res_x, res_y=res_y,
                          spp=spp)
 
-    RenderObj.render_all()
+    RenderObj.render_all_one_pose()

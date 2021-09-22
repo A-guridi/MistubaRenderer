@@ -1,0 +1,101 @@
+<scene version="2.1.0">
+
+<!-- Defaults, these can be set via the command line: -Darg=value -->
+
+	<default name="spp" value="1"/>
+	<default name="resx" value="612"/>
+	<default name="resy" value="512"/>
+
+<!-- Camera and Rendering Parameters -->
+
+	<integrator type="path">
+		<integer name="max_depth" value="3"/>
+	</integrator>
+	<sensor type="perspective">
+		<string name="fov_axis" value="x"/>
+		<float name="fov" value="39.597745"/>
+		<float name="near_clip" value="0.100000"/>
+		<float name="far_clip" value="1000.000000"/>
+		<transform name="to_world">
+			<rotate x="1" angle="-119.42700510945352"/>
+			<rotate y="1" angle="82.20449586887834"/>
+			<rotate z="1" angle="-148.53406116313795"/>
+			<translate value="-1.172031 0.703288 0.097111"/>
+		</transform>
+		<sampler type="independent">
+			<integer name="sample_count" value="$spp"/>
+		</sampler>
+		<film type="hdrfilm">
+			<integer name="width" value="$resx"/>
+			<integer name="height" value="$resy"/>
+		</film>
+	</sensor>
+
+<!-- Materials -->
+
+	<bsdf type="diffuse" id="mat-cup_green_actys_0">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane0_material">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane1_material">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane2_material">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane4_material">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane5_material">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="diffuse" id="empty-emitter-bsdf">
+		<rgb value="0.000000" name="reflectance"/>
+	</bsdf>
+
+<!-- Emitters -->
+
+	<emitter type="constant">
+		<rgb value="0.050000 0.050000 0.050000" name="radiance"/>
+	</emitter>
+	<shape type="ply">
+		<string name="filename" value="meshes/light_plane.ply"/>
+		<ref id="empty-emitter-bsdf" name="bsdf"/>
+		<emitter type="area">
+			<rgb value="5.641901 5.580404 5.788234" name="radiance"/>
+		</emitter>
+	</shape>
+	<emitter type="point">
+		<point name="position" x="0.4882829785346985" y="0.7494717240333557" z="-0.6065575480461121"/>
+		<rgb value="12.735381 14.977231 12.084909" name="intensity"/>
+	</emitter>
+
+<!-- Shapes -->
+
+	<shape type="ply">
+		<string name="filename" value="meshes/cup_green_actys.ply"/>
+		<ref id="mat-cup_green_actys_0" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane0.ply"/>
+		<ref id="mat-ground_plane0_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane1.ply"/>
+		<ref id="mat-ground_plane1_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane2.ply"/>
+		<ref id="mat-ground_plane2_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane4.ply"/>
+		<ref id="mat-ground_plane4_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ground_plane5.ply"/>
+		<ref id="mat-ground_plane5_material" name="bsdf"/>
+	</shape>
+</scene>

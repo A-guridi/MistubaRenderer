@@ -2,7 +2,7 @@
 {
   "version": 3,
   "setup": {
-    "blender_install_path": "/home/ubuntu/blender",
+    "blender_install_path": "/home/arturo/blender",
     "pip": [
       "h5py",
       "scikit-image",
@@ -51,7 +51,7 @@
         "selector": {
           "provider": "getter.Material",
           "conditions": {
-            "name": "obj_material"
+            "type": "MESH"
           }
         },
         "cf_change_to_vertex_color": "Col",
@@ -180,7 +180,7 @@
         "cf_switch_to_emission_shader": {
           "color": {
             "provider": "sampler.Color",
-            "min": [0.5, 0.5, 0.5, 1.0],
+            "min": [0.9, 0.9, 0.9, 1.0],
             "max": [1.0, 1.0, 1.0, 1.0]
           },
           "strength": {
@@ -199,8 +199,8 @@
         "add_properties": {
           "cp_dust_texture": False
         },
-        "cf_set_base_color": [0, 0.9, 0.1, 1],
-      }
+        "cf_set_base_color": [0.9, 0.9, 0.9, 1],
+      },
     },
     {
       "module": "manipulators.MaterialManipulator",
@@ -299,12 +299,12 @@
               "type": "MESH"
             }
           },
-          "number_of_samples": 100,
+          "number_of_samples": 200,
           "location": {
             "provider": "sampler.Shell",
             "center": [0, 0, 0],
-            "radius_min": 0.61,
-            "radius_max": 1.24,
+            "radius_min": 0.51,
+            "radius_max": 1.44,
             "elevation_min": 5,
             "elevation_max": 89,
             "uniform_elevation": True
@@ -331,7 +331,11 @@
             }
           }
         }
-        ]
+        ],
+        "intrinsics":{
+          "resolution_x": 612,
+          "resolution_y": 512
+        }
       }
     },
     {
@@ -339,13 +343,37 @@
       "config": {
         "samples": 50,
         "render_distance": True,
-        "image_type": "JPEG"
+        "render_normals": True
+        #"image_type": "JPEG"
+      }
+    },
+    {
+      "module": "writer.Hdf5Writer",
+      "config": {
+        "postprocessing_modules": {
+          "distance": [
+            {
+              "module": "postprocessing.TrimRedundantChannels",
+            }
+          ]
+        }
+      }
+    },
+    {
+      "module": "renderer.SegMapRenderer",
+      "config": {
+        "map_by": [ "instance", "class", "name" ]
+      }
+    },
+    {
+      "module": "writer.CocoAnnotationsWriter",
+      "config": {
       }
     },
     {
       "module": "writer.ObjWriter",
       "config": {
-        "path": "/home/ubuntu/renders/cup/cup.blend"
+        "path": "/home/arturo/renders/cup/cup.blend"
       }
     },
     {
@@ -360,5 +388,6 @@
         }
       }
     }
+
   ]
 }
