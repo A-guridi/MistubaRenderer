@@ -13,10 +13,10 @@ from mitsuba.render import register_bsdf
 from Mitsuba2.core.Renderer import Renderer
 
 if __name__ == '__main__':
-    """
-    out_path = '/home/arturo/renders/cup/mitsuba2/'
+
+    out_path = '/home/arturo/renders/cup/mitsuba_cup/'
     # bmp = Bitmap(out_path + ".exr")
-    scene = '/home/arturo/renders/cup/cup_scene'
+    scene = '/home/arturo/PycharmProjects/MistubaRenderer/Mitsuba2/cup/cup'
     scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
     camera_file = '/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json'
     res_x, res_y = 612, 512
@@ -24,16 +24,6 @@ if __name__ == '__main__':
     RenderObj = Renderer(output_dir=out_path, scene=scene, camera_file=camera_file, res_x=res_x, res_y=res_y,
                          spp=spp)
 
-    RenderObj.render_all()
-    """
-    out_path = '/home/arturo/PycharmProjects/MistubaRenderer/Mitsuba2/material-testball'
-    # bmp = Bitmap(out_path + ".exr")
-    scene = '/home/arturo/PycharmProjects/MistubaRenderer/Mitsuba2/material-testball/scene'
-    scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
-    camera_file = '/home/ubuntu/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json'
-    res_x, res_y = 512, 512
-    spp = 256
-    RenderObj = Renderer(output_dir=out_path, scene=scene, camera_file=camera_file, res_x=res_x, res_y=res_y,
-                         spp=spp)
+    # RenderObj.render_all_one_pose(out_path)
 
-    RenderObj.render_all_one_pose()
+

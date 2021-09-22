@@ -10,10 +10,9 @@
 	<default name="t_vector" value="0"/>
 
 <!-- Camera and Rendering Parameters -->
-	<integrator type="stokes">
-		<integrator type="path">
-			<integer name="max_depth" value="100"/>
-		</integrator>
+
+	<integrator type="path">
+		<integer name="max_depth" value="100"/>
 	</integrator>
 	<sensor type="perspective">
 		<string name="fov_axis" value="x"/>
@@ -74,6 +73,9 @@
 		<float name="alpha" value="0.1" />
 <!--		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>-->
 	</bsdf>
+	<bsdf type="polarizer" id="filter">
+    	<spectrum name="theta" value="$filter_angle"/>
+	</bsdf>
 
 <!-- Emitters -->
 
@@ -93,7 +95,13 @@
 	</emitter>
 
 <!-- Shapes -->
-
+	<shape type="rectangle" >
+		<transform name="to_world" >
+			<matrix value="$rot_matrix"/>
+			<translate value="0 0 -0.1"/>
+		</transform>
+		<ref id="filter" />
+	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/cup_green_actys.ply"/>
 		<ref id="myBSDF1" name="bsdf"/>

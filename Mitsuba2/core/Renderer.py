@@ -16,8 +16,7 @@ from Mitsuba2.tools.Camera_files import CameraReader
 
 
 class Renderer:
-    def __init__(self, output_dir, scene, filter_angle=None, camera_file=None, res_x=1080, res_y=720, spp=121,
-                 num_images=1):
+    def __init__(self, output_dir, scene, filter_angle=None, camera_file=None, res_x=1080, res_y=720, spp=121):
         """
         :param output_dir: the output folder where the images will be sotred
         :param scene: the .xml file where the scene is to be rendered
@@ -28,6 +27,8 @@ class Renderer:
         if not os.path.isdir(output_dir):
             os.mkdir(output_dir)
         self.output_path = self.output_dir + "output/"
+        if not os.path.isdir(self.output_path):
+            os.mkdir(self.output_path)
         self.scene = scene
         self.scenes = [self.scene + '_filtered.xml'] * 4 + [self.scene + '.xml']
         self.stokes = [False] * 4 + [True]
@@ -40,10 +41,10 @@ class Renderer:
             self.filter_angles = [0.0, 45.0, 90.0, 135.0]
         if camera_file is not None:
             self.CameraReader = CameraReader(camera_file)
+            self.num_images = self.CameraReader.get_amount_of_pictures()
         self.res_x = res_x
         self.res_y = res_y
         self.spp = spp
-        self.num_images = num_images
 
     def render_stokes_images(self, p_bitmap, current_path):
         # note that for rendering meaninful stokes parameters, the filter should be removed from the .xml file
@@ -125,18 +126,18 @@ class Renderer:
             # Get linear pixel values as a numpy array for further processing
             # bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
 
-    def render_all_one_pose(self, current_dir):
+    def render_all_one_pose(self, current_dir, image_numer=13):
         # renders all the images with the 4 angles and the stokes parameters
         for cur_scene, curr_angle, stokes in zip(self.scenes, self.filter_angles, self.stokes):
-            self.render_scene(current_path=current_dir, current_scene=cur_scene, filter_angle=curr_angle, stokes=stokes)
+            self.render_scene(current_path=current_dir, current_scene=cur_scene, filter_angle=curr_angle, stokes=stokes,
+                              im_number=image_numer)
 
     def render_all_images(self):
         for i in range(self.num_images):
             current_path = self.output_path + str(i)+"/"
             if not os.path.isdir(current_path):
                 os.mkdir(current_path)
-            self.render_all_one_pose(current_path)
-
+            self.render_all_one_pose(current_path, image_numer=i)
 
     def render_given_exr(self, exr_file):
         # for rendering only the stokes parameters given an existing .exr file
