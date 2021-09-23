@@ -16,13 +16,15 @@ from Mitsuba2.tools.Camera_files import CameraReader
 
 
 class Renderer:
-    def __init__(self, output_dir, scene, filter_angle=None, camera_file=None, res_x=1080, res_y=720, spp=121):
+    def __init__(self, output_dir, scene, filter_angle=None, camera_file=None, res_x=1080, res_y=720, spp=121,
+                 floor_textures=None):
         """
         :param output_dir: the output folder where the images will be sotred
         :param scene: the .xml file where the scene is to be rendered
         :param filter_angle: the polarizing angle of the filter. If None, the renderer will generate instead the 4 stokes
                             parameters and the dolp and aolp
         """
+
         self.output_dir = output_dir
         if not os.path.isdir(output_dir):
             os.mkdir(output_dir)
@@ -34,7 +36,7 @@ class Renderer:
         self.stokes = [False] * 4 + [True]
         if filter_angle is not None:
             if type(filter_angle) is not list:
-                raise TypeError("Filter Angle must be a list of anlges")
+                raise TypeError("Filter Angle must be a list of angles")
             else:
                 self.filter_angles = filter_angle
         else:
@@ -42,6 +44,8 @@ class Renderer:
         if camera_file is not None:
             self.CameraReader = CameraReader(camera_file)
             self.num_images = self.CameraReader.get_amount_of_pictures()
+            num_textures, mod = divmod(self.num_images, len(floor_textures))
+            self.floor_textures = floor_textures * num_textures + floor_textures[: mod]
         self.res_x = res_x
         self.res_y = res_y
         self.spp = spp
@@ -100,8 +104,7 @@ class Renderer:
         rot_mat = self.CameraReader.get_camera_angles_one_pic(im_number)
 
         local_scene = load_file(current_scene, filter_angle=filter_angle, resx=self.res_x, resy=self.res_y,
-                                spp=self.spp,
-                                rot_matrix=rot_mat)
+                                spp=self.spp, rot_matrix=rot_mat, floor_texture=self.floor_textures[im_number])
         # Call the scene's integrator to render the loaded scene
         local_scene.integrator().render(local_scene, local_scene.sensors()[0])
 
@@ -114,7 +117,7 @@ class Renderer:
             film.develop()
             bmp = Bitmap(current_path + ".exr")
             # render all the stokes parameters and the aolp and dolp
-            self.render_stokes_images(bmp)
+            self.render_stokes_images(bmp, current_path)
 
         else:
             bmp = film.bitmap(raw=True)
@@ -134,12 +137,14 @@ class Renderer:
                               im_number=image_numer)
 
     def render_all_images(self):
-        for i in range(1, self.num_images):
-            current_path = self.output_path + str(i)+"/"
+        for i in range(self.num_images):
+            current_path = self.output_path + str(i) + "/"
             if not os.path.isdir(current_path):
                 os.mkdir(current_path)
             self.render_all_one_pose(current_path, image_numer=i)
 
-    def render_given_exr(self, exr_file):
+    def render_given_exr(self, exr_file, curr_path=None):
         # for rendering only the stokes parameters given an existing .exr file
-        self.render_stokes_images(Bitmap(exr_file))
+        if curr_path is None:
+            curr_path = self.output_path
+        self.render_stokes_images(Bitmap(exr_file), curr_path)
