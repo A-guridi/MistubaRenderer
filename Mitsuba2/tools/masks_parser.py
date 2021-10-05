@@ -1,3 +1,9 @@
+"""
+This parser creates mask files from Coco annotations
+From this, it reads a json file in the coco format and saves all the masks in a subfolder
+called "coco_masks"
+"""
+
 import os
 import numpy as np
 from matplotlib import pyplot as plt
@@ -27,7 +33,7 @@ class MasksParser:
             for ann in anns:
                 def_image = np.maximum(def_image, self.coco.annToMask(ann) * ann['category_id'])
 
-            plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image)
+            plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image, cmap="binary")
 
 
 if __name__ == "__main__":
