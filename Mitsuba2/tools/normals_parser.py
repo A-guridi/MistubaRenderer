@@ -48,7 +48,7 @@ class NormalsParser:
             print("The file does not exist: {}".format(args.hdf5))
 
     def save_all_normals(self):
-        files = os.listdir(self.files_path)
+        files = sorted(os.listdir(self.files_path))
         for image_path in files:
             full_path = os.path.join(self.files_path, image_path)
             self.vis_file(full_path, image_path[:-5])
