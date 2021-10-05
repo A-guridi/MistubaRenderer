@@ -47,7 +47,7 @@ class NormalsParser():
         files = os.listdir(self.files_path)
         for i, image_path in enumerate(files):
             full_path = os.path.join(self.files_path, image_path)
-            self.vis_file(full_path, str(i))
+            self.vis_file(full_path, image_path[:-5])
 
 
 if __name__ == "__main__":
