@@ -14,21 +14,18 @@ class MasksParser:
         self.file_format = file_format
         self.coco = COCO(self.ann_file)
 
-    def save_mask(self, img, anns):
-        def_image = np.zeros((img['height'], img['width']))
-        for ann in anns:
-            def_image = np.maximum(def_image, coco.annToMask(ann) * ann['category_id'])
-
-        plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image)
-
     def save_all_masks(self):
         cat_ids = self.coco.getCatIds()
         img_ids = self.coco.getImgIds(catIds=cat_ids)
         for im_id in img_ids:
-            image = coco.loadImgs(im_id)[0]
+            image = self.coco.loadImgs(im_id)[0]
             anns_ids = self.coco.getAnnIds(imgIds=image['id'], catIds=cat_ids, iscrowd=None)
             anns = self.coco.loadAnns(anns_ids)
-            self.save_mask(image, anns)
+            def_image = np.zeros((img['height'], img['width']))
+            for ann in anns:
+                def_image = np.maximum(def_image, self.coco.annToMask(ann) * ann['category_id'])
+
+            plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image)
 
 
 if __name__ == "__main__":
