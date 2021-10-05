@@ -18,8 +18,8 @@ class MasksParser:
         cat_ids = self.coco.getCatIds()
         img_ids = self.coco.getImgIds(catIds=cat_ids)
         for im_id in img_ids:
-            image = self.coco.loadImgs(im_id)[0]
-            anns_ids = self.coco.getAnnIds(imgIds=image['id'], catIds=cat_ids, iscrowd=None)
+            img = self.coco.loadImgs(im_id)[0]
+            anns_ids = self.coco.getAnnIds(imgIds=img['id'], catIds=cat_ids, iscrowd=None)
             anns = self.coco.loadAnns(anns_ids)
             def_image = np.zeros((img['height'], img['width']))
             for ann in anns:
