@@ -29,3 +29,10 @@ class MasksParser:
             anns_ids = self.coco.getAnnIds(imgIds=image['id'], catIds=cat_ids, iscrowd=None)
             anns = self.coco.loadAnns(anns_ids)
             self.save_mask(image, anns)
+
+
+if __name__ == "__main__":
+    files_path = "/home/arturo/renders/cup/output/coco_data"
+    ann_file = files_path + "/coco_annotations.json"
+    masks_parser = MasksParser(files_path=files_path, ann_file=ann_file)
+    masks_parser.save_all_masks()
