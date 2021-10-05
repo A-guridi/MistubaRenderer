@@ -11,6 +11,8 @@ class MasksParser:
         self.files_path = files_path
         self.ann_file = ann_file
         self.out_path = self.files_path + "/coco_masks/"
+        if not os.path.exists(self.out_path):
+            os.mkdir(self.out_path)
         self.file_format = file_format
         self.coco = COCO(self.ann_file)
 
