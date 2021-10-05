@@ -25,7 +25,7 @@
     {
       "module": "loader.BopLoader",
       "config": {
-        "bop_dataset_path": "<args:0>",
+        "bop_dataset_path": "<args:0>/tless",
         "model_type": "cad",
         "mm2m": True,
         "sample_objects": True,
@@ -35,49 +35,49 @@
         }
       }
     },
-#    {
-#      "module": "loader.BopLoader",
-#      "config": {
-#        "bop_dataset_path": "<args:0>/ycbv",
-#        "model_type": "",
-#        "mm2m": True,
-#        "sample_objects": True,
-#        "num_of_objs_to_sample": 3,
-#        "add_properties": {
-#          "cp_physics": True
-#        },
-#        "cf_set_shading": "SMOOTH"
-#      }
-#    },
-#    {
-#      "module": "loader.BopLoader",
-#      "config": {
-#        "bop_dataset_path": "<args:0>/tyol",
-#        "model_type": "",
-#        "mm2m": True,
-#        "sample_objects": True,
-#        "num_of_objs_to_sample": 3,
-#        "add_properties": {
-#          "cp_physics": True
-#        },
-#        "cf_set_shading": "SMOOTH"
-#      }
-#    },
-#    {
-#      "module": "loader.BopLoader",
-#      "config": {
-#        "bop_dataset_path": "<args:0>/<args:1>",
-#        "model_type": "",
-#        "mm2m": True,
-#        "sample_objects": True,
-#        "num_of_objs_to_sample": 15,
-#        "obj_instances_limit": 1,
-#        "add_properties": {
-#          "cp_physics": True
-#        },
-#        "cf_set_shading": "SMOOTH"
-#      }
-#    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/ycbv",
+        "model_type": "",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": 3,
+        "add_properties": {
+          "cp_physics": True
+        },
+        "cf_set_shading": "SMOOTH"
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/tyol",
+        "model_type": "",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": 3,
+        "add_properties": {
+          "cp_physics": True
+        },
+        "cf_set_shading": "SMOOTH"
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/<args:1>",
+        "model_type": "",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": 15,
+        "obj_instances_limit": 1,
+        "add_properties": {
+          "cp_physics": True
+        },
+        "cf_set_shading": "SMOOTH"
+      }
+    },
     {
       "module": "manipulators.MaterialManipulator",
       "config": {
@@ -353,12 +353,6 @@
           }
         }
         ]
-      }
-    },
-    {
-      "module": "writer.ObjWriter",
-      "config": {
-        "path": "/home/ubuntu/renders/blends/example.blend"
       }
     },
     {
