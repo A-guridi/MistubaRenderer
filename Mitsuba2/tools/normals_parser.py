@@ -13,7 +13,7 @@ class NormalsParser():
         self.files_path = files_path
         self.out_path = files_path + "/normals_png/"
         if not os.path.exists(self.out_path):
-            os.path.mkdir(self.out_path)
+            os.mkdir(self.out_path)
 
     def vis_data(self, key, data, file_label):
         # If key is valid and does not contain segmentation data, create figure and add title
