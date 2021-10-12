@@ -8,7 +8,7 @@ import numpy as np
 
 
 class Simple_files:
-    def __init__(self, camera_json, gt_json, diameter, output_path):
+    def __init__(self, camera_json, gt_json, images_path, diameter, output_path):
         self.camera_file_path = camera_json
         with open(os.path.abspath(camera_json), 'r') as cfile:
             cam = json.load(cfile)
@@ -21,6 +21,7 @@ class Simple_files:
 
         self.diameter = diameter
         self.output_path = output_path
+        self.images_path = images_path
 
     def create_txt_files(self):
         cam_K = self.cam_dict["0"]["cam_K"]
@@ -65,6 +66,13 @@ class Simple_files:
 
         print("All poses successfully created")
 
+    def create_test_images(self):
+        rgb_path = self.output_path + "rgb/"
+        all_folders = sorted(os.listdir(self.images_path))
+        all_folders.remove("lava")
+        for fold in all_folders:
+            shutil.copy2(self.images_path+fold+"stokes_s0.jpg", rgb_path+str(fold)+".jpg")
+
     def assert_all_folders_okay(self):
         # this function asserts that all the poses and values are stored correctly
         list_files = os.listdir(self.output_path)
@@ -92,7 +100,8 @@ if __name__ == "__main__":
     files_path = "/home/arturo/datasets/custom/"
     camera_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json"
     ground_truth_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_gt.json"
+    images_path = "/home/arturo/renders/cup/mitsuba_cup/output/"
     diameter = 0.163514
     simple_parser = Simple_files(camera_json=camera_json, gt_json=ground_truth_json,
                                  diameter=diameter, output_path=files_path)
-    simple_parser.run_all()
+    simple_parser.create_test_images()
