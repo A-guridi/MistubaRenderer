@@ -24,12 +24,15 @@ class Simple_files:
     def create_txt_files(self):
         cam_K = self.cam_dict["0"]["cam_K"]
         cam_out_file = self.output_path + "camera.txt"
+        cam_str = ""
+        for i, k in enumerate(cam_K):
+            if i in [2, 5]:
+                cam_str += str(k) + " \n"
+            else:
+                cam_str += str(k) + " "
+
         with open(os.path.abspath(cam_out_file), 'w') as cam_file:
-            cam_file.write(cam_K[:3])
-            cam_file.write('\n')
-            cam_file.write(cam_K[3:6])
-            cam_file.write('\n')
-            cam_file.write(cam_K[6:])
+            cam_file.write(cam_str)
 
         diam_out_file = output_path + "diameter.txt"
         with open(os.path.abspath(diam_out_file), 'w') as diam_file:
@@ -37,7 +40,7 @@ class Simple_files:
 
     def create_npy_files(self, example_file="pose0.npy"):
         out_path = self.output_path + "pose/"
-        ex_file = np.load("/home/arturo/datasets/custom_download/pose/"+example_file)
+        ex_file = np.load("/home/arturo/datasets/custom_download/pose/" + example_file)
         print(ex_file)
         print(ex_file.shape)
         for i in range(len(self.gt_dict.keys())):
