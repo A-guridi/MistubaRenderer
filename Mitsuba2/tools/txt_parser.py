@@ -2,6 +2,7 @@
 This simple file will create the camera.txt and diameter.txt files for the PVnet input
 """
 import os
+import shutil
 import json
 import numpy as np
 
@@ -46,7 +47,7 @@ class Simple_files:
     def create_npy_files(self, example_file="pose1.npy"):
         out_path = self.output_path + "pose/"
         if os.path.exists(out_path):
-            os.remove(out_path)
+            shutil.rmtree(out_path)
         os.mkdir(out_path)
         ex_file = np.load("/home/arturo/datasets/custom_download/pose/" + example_file)
         print(ex_file)
