@@ -30,9 +30,9 @@ class Simple_files:
         cam_str = ""
         for i, k in enumerate(cam_K):
             if i in [2, 5]:
-                cam_str += str(k).zfill(8) + " \n"
+                cam_str += str(k).zfill(16) + " \n"
             else:
-                cam_str += str(k).zfill(8) + " "
+                cam_str += str(k).zfill(16) + " "
 
         with open(os.path.abspath(cam_out_file), 'w') as cam_file:
             cam_file.write(cam_str)
@@ -41,7 +41,7 @@ class Simple_files:
         if os.path.exists(diam_out_file):
             os.remove(diam_out_file)
         with open(os.path.abspath(diam_out_file), 'w') as diam_file:
-            diam_file.write(self.diameter)
+            diam_file.write(str(self.diameter))
 
     def create_npy_files(self, example_file="pose0.npy"):
         out_path = self.output_path + "pose/"
