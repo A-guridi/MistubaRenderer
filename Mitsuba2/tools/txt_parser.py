@@ -43,7 +43,7 @@ class Simple_files:
         with open(os.path.abspath(diam_out_file), 'w') as diam_file:
             diam_file.write(str(self.diameter))
 
-    def create_npy_files(self, example_file="pose0.npy"):
+    def create_npy_files(self, example_file="pose1.npy"):
         out_path = self.output_path + "pose/"
         if os.path.exists(out_path):
             os.remove(out_path)
@@ -56,11 +56,10 @@ class Simple_files:
             assert len(gt_params) == 1, "Error, only one object with obj_id==1 should be found"
             gt_params = gt_params[0]
             cam_R = np.array(gt_params["cam_R_m2c"]).reshape((3, 3))
-            cam_T = np.array(gt_params["cam_R_m2c"])
-            rot_mat = np.zeros(shape=(4, 4))
+            cam_T = np.array(gt_params["cam_t_m2c"])
+            rot_mat = np.zeros(shape=(3, 4))
             rot_mat[:3, :3] = cam_R
             rot_mat[:3, 3] = cam_T.flatten()
-            rot_mat[3, 3] = 1
             np.save(out_path + f"pose{i}.npy", rot_mat)
 
         print("All poses successfully created")
