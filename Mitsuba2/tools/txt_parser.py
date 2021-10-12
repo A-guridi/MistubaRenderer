@@ -81,7 +81,7 @@ if __name__ == "__main__":
     files_path = "/home/arturo/datasets/custom/"
     camera_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json"
     ground_truth_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_gt.json"
-    diameter = 0
+    diameter = 0.163514
     simple_parser = Simple_files(camera_json=camera_json, gt_json=ground_truth_json,
                                  diameter=diameter, output_path=files_path)
     simple_parser.run_all()
