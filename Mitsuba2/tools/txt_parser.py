@@ -71,7 +71,7 @@ class Simple_files:
         all_folders = sorted(os.listdir(self.images_path))
         all_folders.remove("lava")
         for fold in all_folders:
-            shutil.copy2(self.images_path+fold+"stokes_s0.jpg", rgb_path+str(fold)+".jpg")
+            shutil.copy2(self.images_path+fold+"/stokes_s0.jpg", rgb_path+str(fold)+".jpg")
 
     def assert_all_folders_okay(self):
         # this function asserts that all the poses and values are stored correctly
