@@ -45,6 +45,9 @@ class Simple_files:
 
     def create_npy_files(self, example_file="pose0.npy"):
         out_path = self.output_path + "pose/"
+        if os.path.exists(out_path):
+            os.remove(out_path)
+        os.mkdir(out_path)
         ex_file = np.load("/home/arturo/datasets/custom_download/pose/" + example_file)
         print(ex_file)
         print(ex_file.shape)
