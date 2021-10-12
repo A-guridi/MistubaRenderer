@@ -24,17 +24,22 @@ class Simple_files:
     def create_txt_files(self):
         cam_K = self.cam_dict["0"]["cam_K"]
         cam_out_file = self.output_path + "camera.txt"
+        if os.path.exists(cam_out_file):
+            os.remove(cam_out_file)
+
         cam_str = ""
         for i, k in enumerate(cam_K):
             if i in [2, 5]:
-                cam_str += str(k) + " \n"
+                cam_str += str(k).zfill(8) + " \n"
             else:
-                cam_str += str(k) + " "
+                cam_str += str(k).zfill(8) + " "
 
         with open(os.path.abspath(cam_out_file), 'w') as cam_file:
             cam_file.write(cam_str)
 
-        diam_out_file = output_path + "diameter.txt"
+        diam_out_file = self.output_path + "diameter.txt"
+        if os.path.exists(diam_out_file):
+            os.remove(diam_out_file)
         with open(os.path.abspath(diam_out_file), 'w') as diam_file:
             diam_file.write(self.diameter)
 
