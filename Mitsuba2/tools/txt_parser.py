@@ -68,6 +68,9 @@ class Simple_files:
 
     def create_test_images(self):
         rgb_path = self.output_path + "rgb/"
+        if os.path.exists(rgb_path):
+            shutil.rmtree(rgb_path)
+        os.mkdir(rgb_path)
         all_folders = sorted(os.listdir(self.images_path))
         all_folders.remove("lava")
         for fold in all_folders:
