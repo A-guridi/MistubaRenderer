@@ -59,7 +59,7 @@ class Simple_files:
             assert len(gt_params) == 1, "Error, only one object with obj_id==1 should be found"
             gt_params = gt_params[0]
             cam_R = np.array(gt_params["cam_R_m2c"]).reshape((3, 3))
-            cam_T = np.array(gt_params["cam_t_m2c"])
+            cam_T = np.array(gt_params["cam_t_m2c"]) / 1000.0
             rot_mat = np.zeros(shape=(3, 4))
             rot_mat[:3, :3] = cam_R
             rot_mat[:3, 3] = cam_T.flatten()
