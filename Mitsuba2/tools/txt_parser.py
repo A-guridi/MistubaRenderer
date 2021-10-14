@@ -5,6 +5,7 @@ import os
 import shutil
 import json
 import numpy as np
+import sys
 
 
 class Simple_files:
@@ -74,7 +75,7 @@ class Simple_files:
         all_folders = sorted(os.listdir(self.images_path))
         all_folders.remove("lava")
         for fold in all_folders:
-            shutil.copy2(self.images_path+fold+"/stokes_s0.jpg", rgb_path+str(fold)+".jpg")
+            shutil.copy2(self.images_path + fold + "/stokes_s0.jpg", rgb_path + str(fold) + ".jpg")
 
     def assert_all_folders_okay(self):
         # this function asserts that all the poses and values are stored correctly
@@ -107,4 +108,17 @@ if __name__ == "__main__":
     diameter = 0.163514
     simple_parser = Simple_files(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
                                  diameter=diameter, output_path=files_path)
-    simple_parser.create_txt_files()
+    try:
+        arg = sys.argv[1]
+    except:
+        arg = None
+
+    if arg == "txt":
+        print("Creating txt files")
+        simple_parser.create_txt_files()
+    elif arg == "npy":
+        print("Creating npy poses")
+        simple_parser.create_npy_files()
+    else:
+        print("No argument provided, creating both txt and npy poses")
+        simple_parser.run_all()
