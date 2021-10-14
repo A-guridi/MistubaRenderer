@@ -107,4 +107,4 @@ if __name__ == "__main__":
     diameter = 0.163514
     simple_parser = Simple_files(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
                                  diameter=diameter, output_path=files_path)
-    simple_parser.create_test_images()
+    simple_parser.create_txt_files()
