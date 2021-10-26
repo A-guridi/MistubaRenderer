@@ -1,5 +1,5 @@
 """
-This simple file will create the camera.txt and diameter.txt files for the PVnet input
+This simple file will create the camera.txt, diameter.txt files and npy matrices for the PVnet input
 """
 import os
 import shutil
