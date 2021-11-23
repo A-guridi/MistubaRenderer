@@ -12,7 +12,7 @@
 
 <!-- Camera and Rendering Parameters -->
 	<integrator type="stokes">
-		<integrator type="path">
+		<integrator type="volpath">
 			<integer name="max_depth" value="100"/>
 		</integrator>
 	</integrator>
