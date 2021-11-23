@@ -118,7 +118,7 @@
 		<string name="filename" value="meshes/glass_beer_mug.ply"/>
 		<bsdf type="dielectric">
         	<float name="int_ior" value="1.49"/>
-        	<float name="ext_ior" value="air"/>
+        	<float name="ext_ior" value="1.00028"/>
     	</bsdf>
 		<medium type="homogeneous" name="interior">
         	<float name="scale" value="4"/>
