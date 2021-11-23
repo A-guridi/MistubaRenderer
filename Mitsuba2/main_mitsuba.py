@@ -4,11 +4,6 @@ import mitsuba
 # Set the desired mitsuba variant
 mitsuba.set_variant('scalar_spectral_polarized')
 
-from mitsuba.core import Bitmap, Struct, Thread
-from mitsuba.core.xml import load_file
-from mitsuba.render import register_bsdf
-
-# from BSDF.diff_pol_bsdf import MyDiffuseBSDF
 from core.Renderer import Renderer
 
 if __name__ == '__main__':

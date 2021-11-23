@@ -12,7 +12,7 @@ from mitsuba.core import Bitmap, Struct, Thread
 from mitsuba.core.xml import load_file
 from mitsuba.render import register_bsdf
 
-from Mitsuba2.tools.Camera_files import CameraReader
+from tools.Camera_files import CameraReader
 
 
 class Renderer:
