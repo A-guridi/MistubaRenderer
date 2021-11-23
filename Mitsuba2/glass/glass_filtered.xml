@@ -103,18 +103,22 @@
 	<shape type="rectangle" >
 		<transform name="to_world">
 			<matrix value="$rot_matrix"/>
-			<translate value="0 0 0.5"/>
+			<translate value="0 0 -0.5"/>
 		</transform>
 		<ref id="filter" />
 	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/glass_beer_mug.ply"/>
-		<bsdf type="dielectric">
+		<bsdf type="twosided">
+		<bsdf type="roughdielectric">
+			<string name="distribution" value="ggx" />
         	<float name="int_ior" value="1.49"/>
         	<float name="ext_ior" value="1.00028"/>
+			<float name="alpha" value="0.08"/>
     	</bsdf>
+		</bsdf>
 		<medium type="homogeneous" name="interior">
-        	<float name="scale" value="4"/>
+        	<float name="scale" value="3"/>
         	<rgb name="sigma_t" value="1, 1, 0.5"/>
         	<rgb name="albedo" value="0.0, 0.0, 0.0"/>
     	</medium>
