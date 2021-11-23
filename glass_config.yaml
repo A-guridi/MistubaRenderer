@@ -373,7 +373,7 @@
     {
       "module": "writer.ObjWriter",
       "config": {
-        "path": "/home/arturo/renders/cup/cup.blend"
+        "path": "/home/arturo/renders/glass/glass.blend"
       }
     },
     {
