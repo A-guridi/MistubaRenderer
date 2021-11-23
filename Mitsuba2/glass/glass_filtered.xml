@@ -102,7 +102,7 @@
 <!-- Shapes -->
 	<shape type="rectangle" >
 		<transform name="to_world">
-			<matrix value="t_vector"/>
+			<matrix value="$t_vector"/>
 		</transform>
 		<ref id="filter" />
 	</shape>
