@@ -12,7 +12,7 @@
 
 <!-- Camera and Rendering Parameters -->
 
-	<integrator type="path">
+	<integrator type="volpath">
 		<integer name="max_depth" value="100"/>
 	</integrator>
 	<sensor type="perspective">
@@ -20,12 +20,6 @@
 		<float name="fov" value="39.597745"/>
 		<float name="near_clip" value="0.100000"/>
 		<float name="far_clip" value="1000.000000"/>
-		<!--<transform name="to_world">
-			<rotate x="1" angle="-119.42700510945352"/>
-			<rotate y="1" angle="82.20449586887834"/>
-			<rotate z="1" angle="-148.53406116313795"/>
-			<translate value="-1.172031 0.703288 0.097111"/>
-		</transform>-->
 		<transform name="to_world" >
 			<matrix value="$rot_matrix"/>
 		</transform>
@@ -75,18 +69,17 @@
 	<bsdf type="diffuse" id="empty-emitter-bsdf">
 		<rgb value="0.500000" name="reflectance"/>
 	</bsdf>
-	<bsdf type="twosided" >
-		<bsdf type="pplastic" id="myBSDF1" >
-			<texture type="bitmap" name="diffuse_reflectance">
-				<string name="filename" value="/home/arturo/renders/cup/cup_green_actys.jpg"/>
-			</texture>
-			<string name="distribution" value="ggx" />
-			<float name="int_ior" value="1.5" />
-			<float name="ext_ior" value="1" />
-			<float name="alpha" value="0.08" />
-<!--		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>-->
-		</bsdf>
+	<bsdf type="twosided"  id="myBSDF1">
+			<bsdf type="pplastic">
+				<string name="distribution" value="ggx" />
+				<float name="int_ior" value="1.48" />
+				<float name="ext_ior" value="1" />
+				<float name="alpha" value="0.08" />
+				<rgb value="0.90000 0.90000 0.90000" name="diffuse_reflectance"/>
+			</bsdf>
 	</bsdf>
+
+
 	<bsdf type="polarizer" id="filter">
     	<spectrum name="theta" value="$filter_angle"/>
 	</bsdf>
@@ -118,7 +111,12 @@
 	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/glass_beer_mug.ply"/>
-		<ref id="mat-Default OBJ" name="bsdf"/>
+		<ref id="myBSDF1" name="bsdf"/>
+		<medium type="homogeneous" name="interior">
+        	<float name="scale" value="4"/>
+        	<rgb name="sigma_t" value="1, 1, 0.5"/>
+        	<rgb name="albedo" value="0.0, 0.0, 0.0"/>
+    	</medium>
 	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/ground_plane0.ply"/>
