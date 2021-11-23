@@ -103,7 +103,7 @@
 	<shape type="rectangle" >
 		<transform name="to_world">
 			<matrix value="$rot_matrix"/>
-			<translate value="0 0 -0.5"/>
+			<translate value="0 0 0.5"/>
 		</transform>
 		<ref id="filter" />
 	</shape>
