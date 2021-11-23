@@ -80,7 +80,7 @@
 	<bsdf type="twosided"  id="myBSDF2">
 			<bsdf type="dielectric">
 				<float name="int_ior" value="1.49" />
-				<float name="ext_ior" value="air" />
+				<float name="ext_ior" value="1.00028" />
 			</bsdf>
 	</bsdf>
 
