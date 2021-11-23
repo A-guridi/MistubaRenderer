@@ -6,7 +6,7 @@
 	<default name="resx" value="612"/>
 	<default name="resy" value="512"/>
 	<default name="rot_matrix" value="0"/>
-	<default name="$filter_angle" value="0"/>
+	<default name="filter_angle" value="0"/>
 	<default name="t_vector" value="0"/>
 	<default name="floor_texture" value="/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Wood002/Wood002_2K_Color.jpg"/>
 

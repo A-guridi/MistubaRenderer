@@ -11,10 +11,9 @@
 	<default name="floor_texture" value="/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Wood002/Wood002_2K_Color.jpg"/>
 
 <!-- Camera and Rendering Parameters -->
-	<integrator type="stokes">
-		<integrator type="path">
-			<integer name="max_depth" value="100"/>
-		</integrator>
+
+	<integrator type="path">
+		<integer name="max_depth" value="100"/>
 	</integrator>
 	<sensor type="perspective">
 		<string name="fov_axis" value="x"/>
@@ -43,10 +42,6 @@
 	</sensor>
 
 <!-- Materials -->
-
-	<bsdf type="diffuse" id="mat-cup_green_actys_0">
-		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
-	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane0_material">
 		<texture type="bitmap" name="reflectance">
 			<string name="filename" value="$floor_texture"/>
@@ -92,6 +87,9 @@
 <!--		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>-->
 		</bsdf>
 	</bsdf>
+	<bsdf type="polarizer" id="filter">
+    	<spectrum name="theta" value="$filter_angle"/>
+	</bsdf>
 
 <!-- Emitters -->
 
@@ -106,15 +104,21 @@
 		</emitter>
 	</shape>
 	<emitter type="point">
-		<point name="position" x="0.4882829785346985" y="0.7494717240333557" z="-0.6065575480461121"/>
+		<point name="position" x="0.2096279263496399" y="1.1226462125778198" z="0.17254680395126343"/>
 		<rgb value="5.735381 5.977231 5.084909" name="intensity"/>
 	</emitter>
 
 <!-- Shapes -->
-
+	<shape type="rectangle" >
+		<transform name="to_world">
+			<matrix value="$rot_matrix"/>
+			<translate value="0 0 0.5"/>
+		</transform>
+		<ref id="filter" />
+	</shape>
 	<shape type="ply">
-		<string name="filename" value="meshes/cup_green_actys.ply"/>
-		<ref id="myBSDF1" name="bsdf"/>
+		<string name="filename" value="meshes/glass_beer_mug.ply"/>
+		<ref id="mat-Default OBJ" name="bsdf"/>
 	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/ground_plane0.ply"/>
@@ -136,4 +140,5 @@
 		<string name="filename" value="meshes/ground_plane5.ply"/>
 		<ref id="mat-ground_plane5_material" name="bsdf"/>
 	</shape>
+</scene>
 </scene>

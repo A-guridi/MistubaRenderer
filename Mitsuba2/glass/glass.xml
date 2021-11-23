@@ -43,10 +43,6 @@
 	</sensor>
 
 <!-- Materials -->
-
-	<bsdf type="diffuse" id="mat-cup_green_actys_0">
-		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
-	</bsdf>
 	<bsdf type="diffuse" id="mat-ground_plane0_material">
 		<texture type="bitmap" name="reflectance">
 			<string name="filename" value="$floor_texture"/>
@@ -106,15 +102,15 @@
 		</emitter>
 	</shape>
 	<emitter type="point">
-		<point name="position" x="0.4882829785346985" y="0.7494717240333557" z="-0.6065575480461121"/>
+		<point name="position" x="0.2096279263496399" y="1.1226462125778198" z="0.17254680395126343"/>
 		<rgb value="5.735381 5.977231 5.084909" name="intensity"/>
 	</emitter>
 
 <!-- Shapes -->
 
 	<shape type="ply">
-		<string name="filename" value="meshes/cup_green_actys.ply"/>
-		<ref id="myBSDF1" name="bsdf"/>
+		<string name="filename" value="meshes/glass_beer_mug.ply"/>
+		<ref id="mat-Default OBJ" name="bsdf"/>
 	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/ground_plane0.ply"/>
