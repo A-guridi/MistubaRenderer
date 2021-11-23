@@ -101,10 +101,11 @@ class Renderer:
 
         # Load the actual scene
         # load the axes of camera rotation
-        rot_mat = self.CameraReader.get_camera_angles_one_pic(im_number)
+        rot_mat, plane_mat = self.CameraReader.get_camera_angles_one_pic(im_number)
 
         local_scene = load_file(current_scene, filter_angle=filter_angle, resx=self.res_x, resy=self.res_y,
-                                spp=self.spp, rot_matrix=rot_mat, floor_texture=self.floor_textures[im_number])
+                                spp=self.spp, rot_matrix=rot_mat, floor_texture=self.floor_textures[im_number],
+                                t_vector=plane_mat)
         # Call the scene's integrator to render the loaded scene
         local_scene.integrator().render(local_scene, local_scene.sensors()[0])
 

@@ -42,14 +42,21 @@ class CameraReader:
         # transform it into a string list
         rot_mat_z = rot_z(180)
         rot_mat = np.matmul(rot_mat, rot_mat_z)
-        rot_mat = list(rot_mat.flatten())
-        rot_mat = [str(c) for c in rot_mat]
-        rot_string = ""
+        plane_mat = rot_mat.copy()
+        plane_mat[2, 3] *= 0.95
 
-        for ele in rot_mat:
+        rot_mat = list(rot_mat.flatten())
+        plane_mat = list(plane_mat.flatten())
+        rot_mat = [str(c) for c in rot_mat]
+        plane_mat = [str(c) for c in plane_mat]
+        rot_string = ""
+        plane_str = ""
+
+        for ele, plane_ele in zip(rot_mat, plane_mat):
             rot_string += ele + " "
+            plane_str += plane_ele + " "
         # print(rot_string)
-        return rot_string
+        return rot_string, plane_str
 
     def get_camera_angles_all_pics(self):
         camera_angles = []
