@@ -10,7 +10,6 @@ if __name__ == '__main__':
     out_path = '/home/arturo/renders/glass/mitsuba_glass/'
     # bmp = Bitmap(out_path + ".exr")
     scene = '/home/arturo/PycharmProjects/MistubaRenderer/Mitsuba2/glass/glass'
-    scenes = [scene + '_filtered.xml'] * 4 + [scene + '.xml']
     camera_file = '/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_camera.json'
     floor_textures = [
         "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Marble023/Marble023_2K_Color.jpg",

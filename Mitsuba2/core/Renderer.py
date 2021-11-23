@@ -10,7 +10,6 @@ mitsuba.set_variant('scalar_spectral_polarized')
 
 from mitsuba.core import Bitmap, Struct, Thread
 from mitsuba.core.xml import load_file
-from mitsuba.render import register_bsdf
 
 from tools.Camera_files import CameraReader
 
