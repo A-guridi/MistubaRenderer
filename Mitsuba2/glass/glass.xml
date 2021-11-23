@@ -110,11 +110,9 @@
 
 	<shape type="ply">
 		<string name="filename" value="meshes/glass_beer_mug.ply"/>
-		<bsdf type="roughdielectric">
-			<string name="distribution" value="ggx" />
+		<bsdf type="dielectric">
         	<float name="int_ior" value="1.49"/>
         	<float name="ext_ior" value="1.00028"/>
-			<float name="alpha" value="0.08"/>
     	</bsdf>
 		<medium type="homogeneous" name="interior">
         	<float name="scale" value="3"/>
