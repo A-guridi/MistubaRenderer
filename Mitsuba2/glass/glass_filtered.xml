@@ -75,7 +75,12 @@
 				<float name="int_ior" value="1.48" />
 				<float name="ext_ior" value="1" />
 				<float name="alpha" value="0.08" />
-				<rgb value="0.90000 0.90000 0.90000" name="diffuse_reflectance"/>
+			</bsdf>
+	</bsdf>
+	<bsdf type="twosided"  id="myBSDF2">
+			<bsdf type="dielectric">
+				<float name="int_ior" value="1.49" />
+				<float name="ext_ior" value="air" />
 			</bsdf>
 	</bsdf>
 
@@ -111,7 +116,10 @@
 	</shape>
 	<shape type="ply">
 		<string name="filename" value="meshes/glass_beer_mug.ply"/>
-		<ref id="myBSDF1" name="bsdf"/>
+		<bsdf type="dielectric">
+        	<float name="int_ior" value="1.49"/>
+        	<float name="ext_ior" value="air"/>
+    	</bsdf>
 		<medium type="homogeneous" name="interior">
         	<float name="scale" value="4"/>
         	<rgb name="sigma_t" value="1, 1, 0.5"/>
