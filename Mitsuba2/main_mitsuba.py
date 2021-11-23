@@ -9,7 +9,7 @@ from mitsuba.core.xml import load_file
 from mitsuba.render import register_bsdf
 
 # from BSDF.diff_pol_bsdf import MyDiffuseBSDF
-from Mitsuba2.core.Renderer import Renderer
+from core.Renderer import Renderer
 
 if __name__ == '__main__':
     out_path = '/home/arturo/renders/glass/mitsuba_glass/'
