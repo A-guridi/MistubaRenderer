@@ -77,13 +77,6 @@
 				<float name="alpha" value="0.08" />
 			</bsdf>
 	</bsdf>
-	<bsdf type="twosided"  id="myBSDF2">
-			<bsdf type="dielectric">
-				<float name="int_ior" value="1.49" />
-				<float name="ext_ior" value="1.00028" />
-			</bsdf>
-	</bsdf>
-
 
 	<bsdf type="polarizer" id="filter">
     	<spectrum name="theta" value="$filter_angle"/>
