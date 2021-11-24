@@ -16,12 +16,15 @@ from tools.Camera_files import CameraReader
 
 class Renderer:
     def __init__(self, output_dir, scene, filter_angle=None, camera_file=None, res_x=1080, res_y=720, spp=121,
-                 floor_textures=None):
+                 floor_textures=None, starting_number=0):
         """
         :param output_dir: the output folder where the images will be sotred
         :param scene: the .xml file where the scene is to be rendered
         :param filter_angle: the polarizing angle of the filter. If None, the renderer will generate instead the 4 stokes
                             parameters and the dolp and aolp
+        :param camera_file: the json file with all the camera poses
+        :param res_x, res_y: the resolution of the image for width and height
+        :param ssp: the per pixel ray integration, the more, the better quality but higher computing costs
         """
 
         self.output_dir = output_dir
@@ -48,6 +51,7 @@ class Renderer:
         self.res_x = res_x
         self.res_y = res_y
         self.spp = spp
+        self.starting_number = starting_number
 
     def render_stokes_images(self, p_bitmap, current_path):
         # note that for rendering meaninful stokes parameters, the filter should be removed from the .xml file
@@ -137,14 +141,22 @@ class Renderer:
                               im_number=image_numer)
 
     def render_all_images(self):
-        for i in range(self.num_images):
+        for i in range(self.starting_number, self.num_images):
             current_path = self.output_path + str(i) + "/"
             if not os.path.isdir(current_path):
                 os.mkdir(current_path)
             self.render_all_one_pose(current_path, image_numer=i)
+
+        self.test_all_rendered()
 
     def render_given_exr(self, exr_file, curr_path=None):
         # for rendering only the stokes parameters given an existing .exr file
         if curr_path is None:
             curr_path = self.output_path
         self.render_stokes_images(Bitmap(exr_file), curr_path)
+
+    def test_all_rendered(self):
+        all_folders = sorted(os.listdir(self.output_path))
+        assert all_folders == range(self.starting_number, self.num_images), "Error, not the same number of folders"
+        for i in range(self.starting_number, self.num_images):
+            assert len(os.listdir(self.output_path + str(i) + "/")) == 11, f"Error, no 11 images rendered in pose {i}"
