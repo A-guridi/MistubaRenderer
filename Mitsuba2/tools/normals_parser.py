@@ -22,7 +22,7 @@ class NormalsParser:
         if not os.path.exists(self.out_path):
             os.mkdir(self.out_path)
 
-    def vis_data(self, key, data, file_label):
+    def save_data(self, key, data, file_label):
         plt.figure()
         plt.title("{} in {}".format(key, file_label))
         plt.imsave(self.out_path + str(file_label) + ".png", data)
@@ -39,9 +39,9 @@ class NormalsParser:
                         if len(value.shape) >= 3 and value.shape[0] == 2:
                             # Visualize both eyes separately
                             for i, img in enumerate(value):
-                                self.vis_data(self.key, img, label)
+                                self.save_data(self.key, img, label)
                         else:
-                            self.vis_data(self.key, value, label)
+                            self.save_data(self.key, value, label)
             else:
                 print("The path is not a file")
         else:

@@ -33,7 +33,7 @@ class CameraReader:
         rot_mat[3, 3] = 1
         # we invert to have a camera-to-world matrix
         rot_mat = np.linalg.inv(rot_mat)
-        # swicth -second row with third row, because of the format of saving
+        # switch -second row with third row, because of the format of saving
         sec_row = -rot_mat[1, :]
         rot_mat[1, :] = rot_mat[2, :]
         rot_mat[2, :] = sec_row

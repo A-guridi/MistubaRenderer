@@ -146,7 +146,7 @@ class Renderer:
             if not os.path.isdir(current_path):
                 os.mkdir(current_path)
             self.render_all_one_pose(current_path, image_numer=i)
-
+        # test whether all the poses were rendered
         self.test_all_rendered()
 
     def render_given_exr(self, exr_file, curr_path=None):

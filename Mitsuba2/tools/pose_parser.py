@@ -8,7 +8,7 @@ import numpy as np
 import sys
 
 
-class Simple_files:
+class PoseParser:
     def __init__(self, camera_json, gt_json, images_path, diameter, output_path):
         self.camera_file_path = camera_json
         with open(os.path.abspath(camera_json), 'r') as cfile:
@@ -106,8 +106,8 @@ if __name__ == "__main__":
     ground_truth_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_gt.json"
     images_path = "/home/arturo/renders/cup/mitsuba_cup/output/"
     diameter = 0.163514
-    simple_parser = Simple_files(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
-                                 diameter=diameter, output_path=files_path)
+    simple_parser = PoseParser(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
+                               diameter=diameter, output_path=files_path)
     try:
         arg = sys.argv[1]
     except:
