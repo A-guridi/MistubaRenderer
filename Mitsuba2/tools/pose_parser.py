@@ -19,10 +19,17 @@ class PoseParser:
         with open(os.path.abspath(gt_json), 'r') as gtfile:
             gt = json.load(gtfile)
         self.gt_dict = gt
+        if type(diameter) == list and len(diameter) == 3:
+            self.diameter = self.calculate_diameter(diameter)
+        else:
+            self.diameter = diameter
 
-        self.diameter = diameter
         self.output_path = output_path
         self.images_path = images_path
+
+    @static
+    def calculate_diameter(self, bbox_sizes):
+        return np.sqrt(bbox_sizes[0] ** 2 + bbox_sizes[1] ** 2 + bbox_sizes[2] ** 2)
 
     def create_txt_files(self):
         cam_K = self.cam_dict["0"]["cam_K"]
@@ -106,8 +113,9 @@ if __name__ == "__main__":
     ground_truth_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_gt.json"
     images_path = "/home/arturo/renders/cup/mitsuba_cup/output/"
     diameter = 0.163514
+    new_diameter_glass = [0.131568, 0.086612, 0.16365]      # 3D sizes of the bbox are also supported
     simple_parser = PoseParser(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
-                               diameter=diameter, output_path=files_path)
+                               diameter=new_diameter_glass, output_path=files_path)
     try:
         arg = sys.argv[1]
     except:
