@@ -31,7 +31,7 @@ class NormalsParser:
         os.mkdir(self.files_path)
         for file in all_files:
             origin_file = os.path.join(parent_dir, file)
-            shutil.copy2(origin_file, self.files_path + "/")
+            shutil.move(origin_file, self.files_path + "/")
 
     def save_data(self, key, data, file_label):
         plt.figure()
@@ -54,7 +54,7 @@ class NormalsParser:
                         else:
                             self.save_data(self.key, value, label)
             else:
-                print("The path is not a file")
+                print(f"The path {path} is not a file")
         else:
             print("The file does not exist: {}".format(args.hdf5))
 
