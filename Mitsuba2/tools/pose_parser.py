@@ -19,7 +19,7 @@ class PoseParser:
         with open(os.path.abspath(gt_json), 'r') as gtfile:
             gt = json.load(gtfile)
         self.gt_dict = gt
-        if type(diameter) == list and len(diameter) == 3:
+        if Type(diameter) == list and len(diameter) == 3:
             self.diameter = self.calculate_diameter(diameter)
         else:
             self.diameter = diameter
@@ -109,9 +109,9 @@ class PoseParser:
 
 if __name__ == "__main__":
     files_path = "/home/arturo/datasets/custom/"
-    camera_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_camera.json"
-    ground_truth_json = "/home/arturo/renders/cup/output/bop_data/train_pbr/000000/scene_gt.json"
-    images_path = "/home/arturo/renders/cup/mitsuba_cup/output/"
+    camera_json = "/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_camera.json"
+    ground_truth_json = "/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_gt.json"
+    images_path = "/home/arturo/renders/cup/mitsuba_glass/output/"
     diameter = 0.163514
     new_diameter_glass = [0.131568, 0.086612, 0.16365]      # 3D sizes of the bbox are also supported
     simple_parser = PoseParser(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,

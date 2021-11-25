@@ -37,7 +37,7 @@ class MasksParser:
 
 
 if __name__ == "__main__":
-    files_path = "/home/arturo/renders/cup/output/coco_data"
+    files_path = "/home/arturo/renders/glass/output/coco_data"
     ann_file = files_path + "/coco_annotations.json"
     masks_parser = MasksParser(files_path=files_path, ann_file=ann_file)
     masks_parser.save_all_masks()

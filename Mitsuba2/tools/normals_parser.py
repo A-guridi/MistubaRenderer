@@ -11,6 +11,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import sys
 import json
+import shutil
 
 
 class NormalsParser:
@@ -18,9 +19,19 @@ class NormalsParser:
     def __init__(self, files_path, key="normals"):
         self.key = key
         self.files_path = files_path
+        if not os.path.exists(self.files_path):
+            self.copy_all()
         self.out_path = files_path + f"/{self.key}_png/"
         if not os.path.exists(self.out_path):
             os.mkdir(self.out_path)
+
+    def copy_all(self):
+        parent_dir = os.path.dirname(self.files_path)
+        all_files = [file for file in os.listdir(parent_dir) if os.path.isfile(os.path.join(parent_dir, file))]
+        os.mkdir(self.files_path)
+        for file in all_files:
+            origin_file = os.path.join(parent_dir, file)
+            shutil.copy2(origin_file, self.files_path + "/")
 
     def save_data(self, key, data, file_label):
         plt.figure()
@@ -55,6 +66,6 @@ class NormalsParser:
 
 
 if __name__ == "__main__":
-    files_path = "/home/arturo/renders/cup/output/normals"
+    files_path = "/home/arturo/renders/glass/output/normals"
     normals_parser = NormalsParser(files_path)
     normals_parser.save_all_normals()
