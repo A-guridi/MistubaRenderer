@@ -27,8 +27,8 @@ class PoseParser:
         self.output_path = output_path
         self.images_path = images_path
 
-    @static
-    def calculate_diameter(self, bbox_sizes):
+    @staticmethod
+    def calculate_diameter(bbox_sizes):
         return np.sqrt(bbox_sizes[0] ** 2 + bbox_sizes[1] ** 2 + bbox_sizes[2] ** 2)
 
     def create_txt_files(self):
