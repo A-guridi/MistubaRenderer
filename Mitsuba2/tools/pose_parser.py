@@ -19,7 +19,7 @@ class PoseParser:
         with open(os.path.abspath(gt_json), 'r') as gtfile:
             gt = json.load(gtfile)
         self.gt_dict = gt
-        if Type(diameter) == list and len(diameter) == 3:
+        if type(diameter) == list and len(diameter) == 3:
             self.diameter = self.calculate_diameter(diameter)
         else:
             self.diameter = diameter
