@@ -80,7 +80,10 @@ class PoseParser:
             shutil.rmtree(rgb_path)
         os.mkdir(rgb_path)
         all_folders = sorted(os.listdir(self.images_path))
-        all_folders.remove("lava")
+        try:
+            all_folders.remove("lava")
+        except:
+            pass
         for fold in all_folders:
             shutil.copy2(self.images_path + fold + "/stokes_s0.jpg", rgb_path + str(fold) + ".jpg")
 
@@ -102,16 +105,17 @@ class PoseParser:
                                                                             "match the masks or poses "
 
     def run_all(self):
+        self.create_test_images()
         self.create_txt_files()
         self.create_npy_files()
         print("All processes finished and tested okay")
 
 
 if __name__ == "__main__":
-    files_path = "/home/arturo/datasets/custom/"
+    files_path = "/home/arturo/datasets/custom_glass/"
     camera_json = "/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_camera.json"
     ground_truth_json = "/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_gt.json"
-    images_path = "/home/arturo/renders/cup/mitsuba_glass/output/"
+    images_path = "/home/arturo/renders/glass/mitsuba_glass/output/"
     diameter = 0.163514
     new_diameter_glass = [0.131568, 0.086612, 0.16365]      # 3D sizes of the bbox are also supported
     simple_parser = PoseParser(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
