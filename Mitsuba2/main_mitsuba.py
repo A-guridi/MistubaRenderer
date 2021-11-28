@@ -7,10 +7,10 @@ mitsuba.set_variant('scalar_spectral_polarized')
 from core.Renderer import Renderer
 
 if __name__ == '__main__':
-    out_path = '/home/arturo/renders/glass/mitsuba_glass/'
+    out_path = '/home/arturo/renders/complexscene/mistuba_cscene/'
     # bmp = Bitmap(out_path + ".exr")
-    scene = '/home/arturo/PycharmProjects/MistubaRenderer/Mitsuba2/glass/glass'
-    camera_file = '/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_camera.json'
+    scene = '/home/arturo/PycharmProjects/MistubaRenderer/Mitsuba2/complex_scene/cscene'
+    camera_file = '/home/arturo/renders/complexscene/output/bop_data/train_pbr/000000/scene_camera.json'
     floor_textures = [
         "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Marble023/Marble023_2K_Color.jpg",
         "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/PavingStones001/PavingStones001_2K_Color.jpg",
