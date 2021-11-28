@@ -23,4 +23,6 @@ if __name__ == '__main__':
                          spp=spp, floor_textures=floor_textures, starting_number=starting_number)
 
     # RenderObj.render_all_one_pose(out_path)
-    RenderObj.render_all_images()
+    # RenderObj.render_all_images()
+    RenderObj.render_all_stokes_only()
+

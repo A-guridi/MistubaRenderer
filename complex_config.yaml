@@ -166,7 +166,12 @@
 #        }
 #      }
 #    },
-
+    {
+      "module": "manipulators.WorldManipulator",
+      "config": {
+        "cf_set_world_category_id": 0  # this sets the worlds background category id to 0
+      }
+    },
     {
       "module": "lighting.LightSampler",
       "config": {
@@ -207,7 +212,7 @@
               "type": "MESH"
             }
           },
-          "number_of_samples": 600,
+          "number_of_samples": 20,
           "location": {
             "provider": "sampler.Shell",
             "center": [0, 0, 0],
@@ -225,7 +230,8 @@
                 "provider": "getter.Entity",
                 "conditions": {
                   "type": "MESH",
-                  "cp_physics": True
+                  "cp_physics": True,
+                  "cp_category_id": 1
                 },
                 "random_samples": 10
               }

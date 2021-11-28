@@ -134,20 +134,33 @@ class Renderer:
             # Get linear pixel values as a numpy array for further processing
             # bmp_linear_rgb = bmp.convert(Bitmap.PixelFormat.RGB, Struct.Type.Float32, srgb_gamma=False)
 
-    def render_all_one_pose(self, current_dir, image_numer=13):
+    def render_all_one_pose(self, current_dir, image_number=13):
         # renders all the images with the 4 angles and the stokes parameters
         for cur_scene, curr_angle, stokes in zip(self.scenes, self.filter_angles, self.stokes):
             self.render_scene(current_path=current_dir, current_scene=cur_scene, filter_angle=curr_angle, stokes=stokes,
-                              im_number=image_numer)
+                              im_number=image_number)
 
     def render_all_images(self):
         for i in range(self.starting_number, self.num_images):
             current_path = self.output_path + str(i) + "/"
             if not os.path.isdir(current_path):
                 os.mkdir(current_path)
-            self.render_all_one_pose(current_path, image_numer=i)
+            self.render_all_one_pose(current_path, image_number=i)
         # test whether all the poses were rendered
         self.test_all_rendered()
+
+    def render_stokes_only(self, current_dir, image_number):
+        for cur_scene, curr_angle, stokes in zip(self.scenes, self.filter_angles, self.stokes):
+            if stokes:
+                self.render_scene(current_path=current_dir, current_scene=cur_scene, filter_angle=curr_angle,
+                                  stokes=stokes, im_number=image_number)
+
+    def render_all_stokes_only(self):
+        for i in range(self.starting_number, self.num_images):
+            current_path = self.output_path + str(i) + "/"
+            if not os.path.isdir(current_path):
+                os.mkdir(current_path)
+            self.render_stokes_only(current_path, i)
 
     def render_given_exr(self, exr_file, curr_path=None):
         # for rendering only the stokes parameters given an existing .exr file
