@@ -212,7 +212,7 @@
               "type": "MESH"
             }
           },
-          "number_of_samples": 10,
+          "number_of_samples": 600,
           "location": {
             "provider": "sampler.Shell",
             "center": [0, 0, 0],
