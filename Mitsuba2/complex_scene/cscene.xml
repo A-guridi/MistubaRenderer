@@ -114,8 +114,8 @@
 	<bsdf type="roughconductor" id="myBSDF4">
     	<string name="material" value="Al"/>
     	<string name="distribution" value="ggx"/>
-    	<float name="alphaU" value="0.05"/>
-    	<float name="alphaV" value="0.3"/>
+    	<float name="alpha_u" value="0.05"/>
+    	<float name="alpha_v" value="0.3"/>
 	</bsdf>
 
 <!-- Emitters -->
