@@ -124,7 +124,7 @@
 		<rgb value="0.050000 0.050000 0.050000" name="radiance"/>
 	</emitter>
 	<shape type="ply">
-		<string name="filename" value="meshes/light_plane.ply"/>
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/light_plane.ply"/>
 		<ref id="empty-emitter-bsdf" name="bsdf"/>
 		<emitter type="area">
 			<rgb value="19.641901 19.580404 19.788234" name="radiance"/>
