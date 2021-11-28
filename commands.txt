@@ -5,3 +5,6 @@ python run.py examples/datasets/bop_challenge/config_lm_upright.yaml /home/ubunt
 python run.py examples/datasets/bop_object_on_surface_sampling/cup_config.yaml /home/arturo/renders/cup/cup_green_actys.obj /home/arturo/renders/cup/cup_green_actys.mtl /home/arturo/renders/bop_toolkit resources/cctextures /home/arturo/renders/cup/output
 
 python run.py glass_config.yaml /home/arturo/renders/glass/glass_beer_mug.obj no_texture /home/arturo/renders/bop_toolkit resources/cctextures /home/arturo/renders/glass/output/
+
+
+python run.py complex_config.yaml /home/arturo/renders/cup/cup_green_actys.obj /home/arturo/renders/cup/cup_green_actys.mtl /home/arturo/renders/bop_toolkit resources/cctextures /home/arturo/renders/complexscene/output/
