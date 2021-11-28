@@ -30,7 +30,7 @@
 		<transform name="to_world" >
 			<matrix value="$rot_matrix"/>
 		</transform>
-		<sampler type="ldsampler">
+		<sampler type="orthogonal">
 			<integer name="sample_count" value="$spp"/>
 		</sampler>
 		<film type="hdrfilm">
