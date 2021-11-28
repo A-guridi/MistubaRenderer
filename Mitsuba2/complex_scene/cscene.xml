@@ -1,0 +1,184 @@
+<scene version="2.2.1">
+
+<!-- Defaults, these can be set via the command line: -Darg=value -->
+
+	<default name="spp" value="1"/>
+	<default name="resx" value="612"/>
+	<default name="resy" value="512"/>
+	<default name="rot_matrix" value="0"/>
+	<default name="filter_angle" value="0"/>
+	<default name="t_vector" value="0"/>
+	<default name="floor_texture" value="/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Wood002/Wood002_2K_Color.jpg"/>
+
+<!-- Camera and Rendering Parameters -->
+	<integrator type="stokes">
+		<integrator type="volpath">
+			<integer name="max_depth" value="100"/>
+		</integrator>
+	</integrator>
+	<sensor type="perspective">
+		<string name="fov_axis" value="x"/>
+		<float name="fov" value="39.597745"/>
+		<float name="near_clip" value="0.100000"/>
+		<float name="far_clip" value="1000.000000"/>
+		<!--<transform name="to_world">
+			<rotate x="1" angle="-119.42700510945352"/>
+			<rotate y="1" angle="82.20449586887834"/>
+			<rotate z="1" angle="-148.53406116313795"/>
+			<translate value="-1.172031 0.703288 0.097111"/>
+		</transform>-->
+		<transform name="to_world" >
+			<matrix value="$rot_matrix"/>
+		</transform>
+		<sampler type="ldsampler">
+			<integer name="sample_count" value="$spp"/>
+		</sampler>
+		<film type="hdrfilm">
+			<integer name="width" value="$resx"/>
+			<integer name="height" value="$resy"/>
+			<string name="file_format" value="openexr" />
+			<string name="pixel_format" value="rgb" />
+			<rfilter type="tent" />
+		</film>
+	</sensor>
+
+<!-- Materials -->
+	<bsdf type="diffuse" id="mat_ground_plane_material">
+		<texture type="bitmap" name="reflectance">
+			<string name="filename" value="$floor_texture"/>
+		</texture>
+		<!--<rgb value="0.700000 0.700000 0.700000" name="reflectance"/>-->
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane1_material">
+		<texture type="bitmap" name="reflectance">
+			<string name="filename" value="$floor_texture"/>
+		</texture>
+		<!--<rgb value="0.700000 0.700000 0.700000" name="reflectance"/>-->
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane2_material">
+		<texture type="bitmap" name="reflectance">
+			<string name="filename" value="$floor_texture"/>
+		</texture>
+		<!--<rgb value="0.700000 0.700000 0.700000" name="reflectance"/>-->
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane4_material">
+		<texture type="bitmap" name="reflectance">
+			<string name="filename" value="$floor_texture"/>
+		</texture>
+		<!--<rgb value="0.700000 0.700000 0.700000" name="reflectance"/>-->
+	</bsdf>
+	<bsdf type="diffuse" id="mat-ground_plane5_material">
+		<texture type="bitmap" name="reflectance">
+			<string name="filename" value="$floor_texture"/>
+		</texture>
+		<!--<rgb value="0.700000 0.700000 0.700000" name="reflectance"/>-->
+	</bsdf>
+	<bsdf type="diffuse" id="empty-emitter-bsdf">
+		<rgb value="0.500000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="twosided" id="myBSDF1" >
+		<bsdf type="pplastic"  >
+			<texture type="bitmap" name="diffuse_reflectance">
+				<string name="filename" value="/home/arturo/renders/complexscene/meshes/cup_green_actys.jpg"/>
+			</texture>
+			<string name="distribution" value="ggx" />
+			<float name="int_ior" value="1.5" />
+			<float name="ext_ior" value="1" />
+			<float name="alpha" value="0.08" />
+<!--		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>-->
+		</bsdf>
+	</bsdf>
+
+	<bsdf type="pplastic"  id="myBSDF2" >
+		<texture type="bitmap" name="diffuse_reflectance">
+			<string name="filename" value="/home/arturo/renders/complexscene/meshes/box_special_k.jpg"/>
+		</texture>
+		<string name="distribution" value="ggx" />
+		<float name="int_ior" value="1.3" />
+		<float name="ext_ior" value="1" />
+		<float name="alpha" value="0.05" />
+		<!--		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>-->
+	</bsdf>
+
+	<bsdf type="pplastic" id="myBSDF3"   >
+		<texture type="bitmap" name="diffuse_reflectance">
+			<string name="filename" value="/home/arturo/renders/complexscene/meshes/can_kidney_beans.jpg"/>
+		</texture>
+		<string name="distribution" value="ggx" />
+		<float name="int_ior" value="1.3" />
+		<float name="ext_ior" value="1" />
+		<float name="alpha" value="0.05" />
+		<!--		<rgb value="0.320000 0.370000 0.820000" name="diffuse_reflectance"/>-->
+	</bsdf>
+
+	<bsdf type="roughconductor" id="myBSDF4">
+    	<string name="material" value="Al"/>
+    	<string name="distribution" value="ggx"/>
+    	<float name="alphaU" value="0.05"/>
+    	<float name="alphaV" value="0.3"/>
+	</bsdf>
+
+<!-- Emitters -->
+
+	<emitter type="constant">
+		<rgb value="0.050000 0.050000 0.050000" name="radiance"/>
+	</emitter>
+	<shape type="ply">
+		<string name="filename" value="meshes/light_plane.ply"/>
+		<ref id="empty-emitter-bsdf" name="bsdf"/>
+		<emitter type="area">
+			<rgb value="19.641901 19.580404 19.788234" name="radiance"/>
+		</emitter>
+	</shape>
+	<emitter type="point">
+		<point name="position" x="0.2096279263496399" y="1.1226462125778198" z="0.17254680395126343"/>
+		<rgb value="5.735381 5.977231 5.084909" name="intensity"/>
+	</emitter>
+
+<!-- Shapes -->
+
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/glass_beer_mug.ply"/>
+		<bsdf type="dielectric">
+        	<float name="int_ior" value="1.49"/>
+        	<float name="ext_ior" value="1.00028"/>
+    	</bsdf>
+		<medium type="homogeneous" name="interior">
+        	<float name="scale" value="3"/>
+        	<rgb name="sigma_t" value="1, 1, 0.5"/>
+        	<rgb name="albedo" value="0.0, 0.0, 0.0"/>
+    	</medium>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/cup_green_actys.ply"/>
+		<ref id="myBSDF1" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/ground_plane0.ply"/>
+		<ref id="mat_ground_plane_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/ground_plane1.ply"/>
+		<ref id="mat_ground_plane_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/ground_plane2.ply"/>
+		<ref id="mat_ground_plane_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/ground_plane4.ply"/>
+		<ref id="mat_ground_plane_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/ground_plane5.ply"/>
+		<ref id="mat_ground_plane_material" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/can_kidney_beans.ply"/>
+		<ref id="myBSDF3" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="/home/arturo/renders/complexscene/meshes/box_special_k.ply"/>
+		<ref id="myBSDF2" name="bsdf"/>
+	</shape>
+</scene>

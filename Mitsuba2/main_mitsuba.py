@@ -15,7 +15,8 @@ if __name__ == '__main__':
         "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Marble023/Marble023_2K_Color.jpg",
         "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/PavingStones001/PavingStones001_2K_Color.jpg",
         "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Tiles016/Tiles016_2K_Color.jpg",
-        "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Wood001/Wood001_2K_Color.jpg"]
+        "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Wood001/Wood001_2K_Color.jpg",
+        "/home/arturo/PycharmProjects/MistubaRenderer/resources/cctextures/Tiles023/Tiles023_2K_Color.jpg"]
     res_x, res_y = 612, 512
     spp = 256
     starting_number = 0
@@ -25,4 +26,3 @@ if __name__ == '__main__':
     # RenderObj.render_all_one_pose(out_path)
     # RenderObj.render_all_images()
     RenderObj.render_all_stokes_only()
-
