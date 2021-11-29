@@ -21,7 +21,7 @@ class MasksParser:
             self.out_path = self.files_path + f"/coco_masks_{class_id}/"
         else:
             self.out_path = self.files_path + f"/coco_masks/"
-            
+
         if not os.path.exists(self.out_path):
             os.mkdir(self.out_path)
         else:
@@ -29,13 +29,24 @@ class MasksParser:
             os.mkdir(self.out_path)
         self.file_format = file_format
         self.coco = COCO(self.ann_file)
-        self.class_id = class_id
-        if type(self.class_id) != list:
-            self.class_id = [self.class_id]
+        self.ids = self.create_ids(class_id)
+
+    def create_ids(self, class_id):
+        if class_id is None:
+            return None
+        if type(class_id) != list:
+            class_id = [class_id]
+        if 333 not in self.class_id:
+            class_id.append(333)
+        elif 333 != class_id[-1]:
+            class_id.remove(333)
+            class_id.append(333)
+
+        return class_id
 
     def save_all_masks(self):
-        if self.class_id is not None:
-            cat_ids = self.coco.getCatIds(catIds=self.class_id)
+        if self.ids is not None:
+            cat_ids = self.coco.getCatIds(catIds=self.ids)
             print(f"Getting masks for the class_id {self.class_id}")
         else:
             cat_ids = self.coco.getCatIds()
@@ -44,16 +55,18 @@ class MasksParser:
             img = self.coco.loadImgs(im_id)[0]
             anns_ids = self.coco.getAnnIds(imgIds=img['id'], catIds=cat_ids, iscrowd=None)
             anns = self.coco.loadAnns(anns_ids)
-            def_image = np.ones((img['height'], img['width']))*255
+            def_image = np.zeros((img['height'], img['width']))
             for ann in anns:
-                def_image = np.maximum(def_image, self.coco.annToMask(ann) * 0)
+                val = ann['category_id'] if ann['category_id'] != 333 else 0
+                def_image = np.maximum(def_image, self.coco.annToMask(ann)*val)
 
+            def_image = def_image * 255.0 / np.max(np.max(def_image))
             plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image, cmap="binary")
 
 
 if __name__ == "__main__":
     files_path = "/home/arturo/renders/complexscene/output/coco_data"
     ann_file = files_path + "/coco_annotations.json"
-    class_id = 1  # 1 for the cup, 2 for the beer glass
+    class_id = [1, 333]  # 1 for the cup, 2 for the beer glass
     masks_parser = MasksParser(files_path=files_path, ann_file=ann_file, class_id=class_id)
     masks_parser.save_all_masks()
