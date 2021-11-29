@@ -73,6 +73,6 @@ if __name__ == "__main__":
     files_path = "/home/arturo/renders/complexscene/output/coco_data"
     ann_file = files_path + "/coco_annotations.json"
     class_id = [1, 333]  # 1 for the cup, 2 for the beer glass
-    default_size = (612, 512)
+    default_size = (512, 612)
     masks_parser = MasksParser(files_path=files_path, ann_file=ann_file, class_id=class_id, def_size=default_size)
     masks_parser.save_all_masks()
