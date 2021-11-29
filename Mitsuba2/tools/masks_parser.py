@@ -21,9 +21,15 @@ class MasksParser:
             os.mkdir(self.out_path)
         self.file_format = file_format
         self.coco = COCO(self.ann_file)
+        self.class_id = class_id
+        if type(self.class_id) != list:
+            self.class_id = [self.class_id]
 
     def save_all_masks(self):
-        cat_ids = self.coco.getCatIds()
+        if class_id is not None:
+            cat_ids = self.coco.getCatIds(self.class_id)
+        else:
+            cat_ids = self.coco.getCatIds()
         img_ids = self.coco.getImgIds(catIds=cat_ids)
         for im_id in img_ids:
             img = self.coco.loadImgs(im_id)[0]
@@ -39,5 +45,6 @@ class MasksParser:
 if __name__ == "__main__":
     files_path = "/home/arturo/renders/glass/output/coco_data"
     ann_file = files_path + "/coco_annotations.json"
-    masks_parser = MasksParser(files_path=files_path, ann_file=ann_file)
+    class_id = 1  # 1 for the cup, 2 for the beer glass
+    masks_parser = MasksParser(files_path=files_path, ann_file=ann_file, class_id=class_id)
     masks_parser.save_all_masks()
