@@ -170,6 +170,6 @@ class Renderer:
 
     def test_all_rendered(self):
         all_folders = sorted(os.listdir(self.output_path))
-        assert all_folders == range(self.starting_number, self.num_images), "Error, not the same number of folders"
+        assert all_folders == range(self.num_images), "Error, not the same number of folders"
         for i in range(self.starting_number, self.num_images):
             assert len(os.listdir(self.output_path + str(i) + "/")) == 11, f"Error, no 11 images rendered in pose {i}"

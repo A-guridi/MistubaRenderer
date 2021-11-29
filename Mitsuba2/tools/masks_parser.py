@@ -13,7 +13,7 @@ import skimage.io as io
 
 class MasksParser:
 
-    def __init__(self, files_path, ann_file, file_format=".png"):
+    def __init__(self, files_path, ann_file, file_format=".png", class_id=None):
         self.files_path = files_path
         self.ann_file = ann_file
         self.out_path = self.files_path + "/coco_masks/"
