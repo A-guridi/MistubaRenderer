@@ -16,7 +16,11 @@ class MasksParser:
     def __init__(self, files_path, ann_file, file_format=".png", class_id=None):
         self.files_path = files_path
         self.ann_file = ann_file
-        self.out_path = self.files_path + "/coco_masks/"
+        if class_id is not None:
+            self.out_path = self.files_path + f"/coco_masks_{class_id}/"
+        else:
+            self.out_path = self.files_path + f"/coco_masks/"
+            
         if not os.path.exists(self.out_path):
             os.mkdir(self.out_path)
         self.file_format = file_format
@@ -43,7 +47,7 @@ class MasksParser:
 
 
 if __name__ == "__main__":
-    files_path = "/home/arturo/renders/glass/output/coco_data"
+    files_path = "/home/arturo/renders/complexscene/output/coco_data"
     ann_file = files_path + "/coco_annotations.json"
     class_id = 1  # 1 for the cup, 2 for the beer glass
     masks_parser = MasksParser(files_path=files_path, ann_file=ann_file, class_id=class_id)

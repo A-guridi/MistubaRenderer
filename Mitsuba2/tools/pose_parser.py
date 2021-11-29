@@ -9,12 +9,12 @@ import sys
 
 
 class PoseParser:
-    def __init__(self, camera_json, gt_json, images_path, diameter, output_path):
+    def __init__(self, camera_json, gt_json, images_path, diameter, output_path, object_id=1):
         self.camera_file_path = camera_json
         with open(os.path.abspath(camera_json), 'r') as cfile:
             cam = json.load(cfile)
         self.cam_dict = cam
-
+        self.object_id = object_id
         self.gt_file_path = gt_json
         with open(os.path.abspath(gt_json), 'r') as gtfile:
             gt = json.load(gtfile)
@@ -23,9 +23,10 @@ class PoseParser:
             self.diameter = self.calculate_diameter(diameter)
         else:
             self.diameter = diameter
-
-        self.output_path = output_path
         self.images_path = images_path
+        self.output_path = output_path
+        if not os.path.exists(self.output_path):
+            os.mkdir(self.output_path)
 
     @staticmethod
     def calculate_diameter(bbox_sizes):
@@ -53,16 +54,13 @@ class PoseParser:
         with open(os.path.abspath(diam_out_file), 'w') as diam_file:
             diam_file.write(str(self.diameter))
 
-    def create_npy_files(self, example_file="pose1.npy"):
+    def create_npy_files(self):
         out_path = self.output_path + "pose/"
         if os.path.exists(out_path):
             shutil.rmtree(out_path)
         os.mkdir(out_path)
-        ex_file = np.load("/home/arturo/datasets/custom_download/pose/" + example_file)
-        print(ex_file)
-        print(ex_file.shape)
         for i in range(len(self.gt_dict.keys())):
-            gt_params = [gt_dict for gt_dict in self.gt_dict[str(i)] if gt_dict["obj_id"] == 1]
+            gt_params = [gt_dict for gt_dict in self.gt_dict[str(i)] if gt_dict["obj_id"] == self.object_id]
             assert len(gt_params) == 1, "Error, only one object with obj_id==1 should be found"
             gt_params = gt_params[0]
             cam_R = np.array(gt_params["cam_R_m2c"]).reshape((3, 3))
@@ -80,10 +78,8 @@ class PoseParser:
             shutil.rmtree(rgb_path)
         os.mkdir(rgb_path)
         all_folders = sorted(os.listdir(self.images_path))
-        try:
+        if "lava" in all_folders:
             all_folders.remove("lava")
-        except:
-            pass
         for fold in all_folders:
             shutil.copy2(self.images_path + fold + "/stokes_s0.jpg", rgb_path + str(fold) + ".jpg")
 
@@ -112,14 +108,15 @@ class PoseParser:
 
 
 if __name__ == "__main__":
-    files_path = "/home/arturo/datasets/custom_glass/"
-    camera_json = "/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_camera.json"
-    ground_truth_json = "/home/arturo/renders/glass/output/bop_data/train_pbr/000000/scene_gt.json"
-    images_path = "/home/arturo/renders/glass/mitsuba_glass/output/"
+    files_path = "/home/arturo/datasets/custom_cscene/"
+    camera_json = "/home/arturo/renders/complexscene/output/bop_data/train_pbr/000000/scene_camera.json"
+    ground_truth_json = "/home/arturo/renders/complexscene/output/bop_data/train_pbr/000000/scene_gt.json"
+    images_path = "/home/arturo/renders/complexscene/mitsuba_cscene/output/"
     diameter = 0.163514
-    new_diameter_glass = [0.131568, 0.086612, 0.16365]      # 3D sizes of the bbox are also supported
+    new_diameter_glass = [0.131568, 0.086612, 0.16365]  # 3D sizes of the bbox are also supported
+    object_id = 1  # 1 for the cup, 2 for the beer glass
     simple_parser = PoseParser(camera_json=camera_json, gt_json=ground_truth_json, images_path=images_path,
-                               diameter=new_diameter_glass, output_path=files_path)
+                               diameter=diameter, output_path=files_path)
     try:
         arg = sys.argv[1]
     except:

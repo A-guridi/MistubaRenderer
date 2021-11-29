@@ -66,6 +66,6 @@ class NormalsParser:
 
 
 if __name__ == "__main__":
-    files_path = "/home/arturo/renders/glass/output/normals"
+    files_path = "/home/arturo/renders/complexscene/output/normals"
     normals_parser = NormalsParser(files_path)
     normals_parser.save_all_normals()
