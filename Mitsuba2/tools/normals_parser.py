@@ -43,8 +43,6 @@ class NormalsParser:
         if os.path.exists(path):
             if os.path.isfile(path):
                 with h5py.File(path, 'r') as data:
-                    print(path + " contains the following keys: " + str(data.keys()))
-
                     if self.key in data.keys():
                         value = np.array(data[self.key])
                         if len(value.shape) >= 3 and value.shape[0] == 2:

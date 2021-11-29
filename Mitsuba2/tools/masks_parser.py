@@ -30,7 +30,7 @@ class MasksParser:
             self.class_id = [self.class_id]
 
     def save_all_masks(self):
-        if class_id is not None:
+        if self.class_id is not None:
             cat_ids = self.coco.getCatIds(self.class_id)
         else:
             cat_ids = self.coco.getCatIds()
