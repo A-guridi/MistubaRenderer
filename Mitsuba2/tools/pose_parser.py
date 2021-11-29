@@ -111,7 +111,7 @@ if __name__ == "__main__":
     files_path = "/home/arturo/datasets/custom_cscene/"
     camera_json = "/home/arturo/renders/complexscene/output/bop_data/train_pbr/000000/scene_camera.json"
     ground_truth_json = "/home/arturo/renders/complexscene/output/bop_data/train_pbr/000000/scene_gt.json"
-    images_path = "/home/arturo/renders/complexscene/mitsuba_cscene/output/"
+    images_path = "/home/arturo/renders/complexscene/mistuba_cscene/output/"
     diameter = 0.163514
     new_diameter_glass = [0.131568, 0.086612, 0.16365]  # 3D sizes of the bbox are also supported
     object_id = 1  # 1 for the cup, 2 for the beer glass
