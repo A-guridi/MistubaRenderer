@@ -17,10 +17,7 @@ class MasksParser:
     def __init__(self, files_path, ann_file, file_format=".png", class_id=None):
         self.files_path = files_path
         self.ann_file = ann_file
-        if class_id is not None:
-            self.out_path = self.files_path + f"/coco_masks_{class_id}/"
-        else:
-            self.out_path = self.files_path + f"/coco_masks/"
+         self.out_path = self.files_path + f"/coco_masks/"
 
         if not os.path.exists(self.out_path):
             os.mkdir(self.out_path)
@@ -47,7 +44,7 @@ class MasksParser:
     def save_all_masks(self):
         if self.ids is not None:
             cat_ids = self.coco.getCatIds(catIds=self.ids)
-            print(f"Getting masks for the class_id {self.ids}")
+            print(f"Getting masks for the class ids {self.ids}")
         else:
             cat_ids = self.coco.getCatIds()
         img_ids = self.coco.getImgIds(catIds=cat_ids)
@@ -58,7 +55,7 @@ class MasksParser:
             def_image = np.zeros((img['height'], img['width']))
             for ann in anns:
                 val = ann['category_id'] if ann['category_id'] != 333 else 0
-                def_image = np.maximum(def_image, self.coco.annToMask(ann)*val)
+                def_image = np.maximum(def_image,(1+self.coco.annToMask(ann))*val)
 
             def_image = def_image * 255.0 / np.max(np.max(def_image))
             plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image, cmap="binary")
