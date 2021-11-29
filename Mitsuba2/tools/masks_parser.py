@@ -44,9 +44,9 @@ class MasksParser:
             img = self.coco.loadImgs(im_id)[0]
             anns_ids = self.coco.getAnnIds(imgIds=img['id'], catIds=cat_ids, iscrowd=None)
             anns = self.coco.loadAnns(anns_ids)
-            def_image = np.zeros((img['height'], img['width']))
+            def_image = np.ones((img['height'], img['width']))*255
             for ann in anns:
-                def_image = np.maximum(def_image, self.coco.annToMask(ann) * 255)
+                def_image = np.maximum(def_image, self.coco.annToMask(ann) * 0)
 
             plt.imsave(self.out_path + str(img['id']) + self.file_format, def_image, cmap="binary")
 
