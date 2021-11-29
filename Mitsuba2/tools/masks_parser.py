@@ -9,6 +9,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from pycocotools.coco import COCO
 import skimage.io as io
+import shutil
 
 
 class MasksParser:
@@ -22,6 +23,9 @@ class MasksParser:
             self.out_path = self.files_path + f"/coco_masks/"
             
         if not os.path.exists(self.out_path):
+            os.mkdir(self.out_path)
+        else:
+            shutil.rmtree(self.out_path)
             os.mkdir(self.out_path)
         self.file_format = file_format
         self.coco = COCO(self.ann_file)
