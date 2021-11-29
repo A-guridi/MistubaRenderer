@@ -36,7 +36,7 @@ class MasksParser:
             return None
         if type(class_id) != list:
             class_id = [class_id]
-        if 333 not in self.class_id:
+        if 333 not in class_id:
             class_id.append(333)
         elif 333 != class_id[-1]:
             class_id.remove(333)
