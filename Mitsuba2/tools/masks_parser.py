@@ -47,7 +47,7 @@ class MasksParser:
     def save_all_masks(self):
         if self.ids is not None:
             cat_ids = self.coco.getCatIds(catIds=self.ids)
-            print(f"Getting masks for the class_id {self.class_id}")
+            print(f"Getting masks for the class_id {self.ids}")
         else:
             cat_ids = self.coco.getCatIds()
         img_ids = self.coco.getImgIds(catIds=cat_ids)
