@@ -17,7 +17,7 @@ class MasksParser:
     def __init__(self, files_path, ann_file, file_format=".png", class_id=None):
         self.files_path = files_path
         self.ann_file = ann_file
-         self.out_path = self.files_path + f"/coco_masks/"
+        self.out_path = self.files_path + f"/coco_masks/"
 
         if not os.path.exists(self.out_path):
             os.mkdir(self.out_path)
